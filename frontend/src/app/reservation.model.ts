@@ -1,5 +1,5 @@
 export interface Reservation {
-  id: string;
+  id?: string;
   customerName: string;
   customerEmail: string;
   customerPhone: string;
@@ -8,6 +8,6 @@ export interface Reservation {
   reservationDate: string;
   reservationTime: string;
   numGuests: number;
-  specialRequests: string[];
+  specialRequests?: string[];
   status: 'pending' | 'confirmed' | 'cancelled';
 }

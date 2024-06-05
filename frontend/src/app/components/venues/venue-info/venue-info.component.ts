@@ -12,7 +12,6 @@ import { Reservation } from "../../../reservation.model";
 export class VenueInfoComponent implements OnInit {
   venue!: Venue;
   reservation: Reservation = {
-    id: '',
     customerName: '',
     customerEmail: '',
     customerPhone: '',
@@ -21,7 +20,6 @@ export class VenueInfoComponent implements OnInit {
     reservationDate: '',
     reservationTime: '',
     numGuests: 0,
-    specialRequests: [],
     status: 'pending'
   };
 

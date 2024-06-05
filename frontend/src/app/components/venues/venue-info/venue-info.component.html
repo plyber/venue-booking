@@ -12,11 +12,11 @@
     <p><strong>Type:</strong> {{ venue.type }}</p>
     <p *ngIf="venue.amenities"><strong>Amenities:</strong> {{ venue.amenities.join(', ') }}</p>
   </div>
-  <hr>
-  <div class="d-flex flex-column m-auto" style="min-width: 50%">
-    <h3>Create Reservation</h3>
 
-    <form (ngSubmit)="createReservation()">
+  <hr>
+  <div class="form-container m-auto">
+    <h3>Create Reservation</h3>
+    <form #reservationForm="ngForm" (ngSubmit)="createReservation()" novalidate>
       <div class="form-group">
         <label for="customerName">Name:</label>
         <input [(ngModel)]="reservation.customerName" class="form-control" id="customerName" name="customerName"
@@ -55,10 +55,10 @@
                name="reservationTime" required
                type="time">
       </div>
-    <div class="button-section d-flex flex-row justify-content-between py-3">
-      <button type="button" [routerLink]="['/venues']" class="btn btn-primary px-5 py-3">Back</button>
-      <button class="btn btn-success px-5 py-3" type="submit">Reserve</button>
-    </div>
+      <div class="button-section d-flex flex-row justify-content-between py-3">
+        <button [routerLink]="['/venues']" class="btn btn-primary px-5 py-3" type="button">Back</button>
+        <button class="btn btn-success px-5 py-3" type="submit">Reserve</button>
+      </div>
     </form>
   </div>
 </div>
