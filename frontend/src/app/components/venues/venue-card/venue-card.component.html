@@ -1,0 +1,13 @@
+<div class="card-container m-2" style="max-width: 16rem">
+  <div class="card p-4">
+    <h5 class="card-title"><strong>Name: </strong>{{name}}</h5>
+    <h6 class="card-subtitle"><strong>Address: </strong>{{address}}</h6>
+    <hr>
+    <p class="card-text"><strong>Capacity: </strong>{{capacity}}</p>
+    <p class="card-text"><strong>Type: </strong>{{type}}</p>
+    <p *ngIf="amenities" class="card-text"><strong>Amenities: </strong>{{amenities}}</p>
+    <ng-content>
+
+    </ng-content>
+  </div>
+</div>
