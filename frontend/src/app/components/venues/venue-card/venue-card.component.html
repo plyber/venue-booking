@@ -1,13 +1,18 @@
-<div class="card-container m-2" style="max-width: 16rem">
-  <div class="card p-4">
-    <h5 class="card-title"><strong>Name: </strong>{{name}}</h5>
-    <h6 class="card-subtitle"><strong>Address: </strong>{{address}}</h6>
+<div class="card m-2 d-flex flex-row justify-content-between venue-card">
+  <div class="image-container">
+    <img class="venue-image"
+         src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/60/5e/15/restaurant.jpg?w=1200&h=-1&s=1">
+    alt="Venue Image">
+  </div>
+  <div class="p-4 d-flex flex-column justify-content-end" style="width: 24rem">
+    <h5 class="card-title"><strong>{{venueCard.name}}</strong></h5>
+    <h6 class="card-subtitle">Created: {{venueCard.createdAt | date}}</h6>
     <hr>
-    <p class="card-text"><strong>Capacity: </strong>{{capacity}}</p>
-    <p class="card-text"><strong>Type: </strong>{{type}}</p>
-    <p *ngIf="amenities" class="card-text"><strong>Amenities: </strong>{{amenities}}</p>
-    <ng-content>
-
-    </ng-content>
+    <p class="card-text"><strong>Type: </strong>{{venueCard.type}}</p>
+    <p class="card-text"><strong>Address: </strong>{{venueCard.address}}</p>
+    <p class="card-text"><strong>Capacity: </strong>{{venueCard.capacity}}</p>
+    <p *ngIf="venueCard.amenities" class="card-text"><strong>Amenities: </strong>{{venueCard.amenities}}</p>
+    <ng-content class=""></ng-content>
   </div>
 </div>
+

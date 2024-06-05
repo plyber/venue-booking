@@ -52,3 +52,12 @@ def view_venues():
     for venue in venues:
         venue['_id'] = str(venue['_id'])
     return jsonify(venues), 200
+
+@venues.route('/view-venue/<venue_id>', methods=['GET'])
+def view_venue(venue_id):
+    venue = mongo.db.venues.find_one({'_id': ObjectId(venue_id)})
+    if venue:
+        venue['_id'] = str(venue['_id'])
+        return jsonify(venue), 200
+    else:
+        return jsonify({'error': 'Venue not found'}), 404

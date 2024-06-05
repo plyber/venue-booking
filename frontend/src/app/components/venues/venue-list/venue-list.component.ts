@@ -1,17 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { DataService } from "../../../services/data.service";
 import { Venue } from "../../../venue.model";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'app-venue-list',
   templateUrl: './venue-list.component.html',
   styleUrls: ['./venue-list.component.scss']
 })
-export class VenueListComponent implements OnInit {
+export class VenueListComponent implements OnDestroy {
   venueData!: Venue[];
-  subscription = this.dataService.createVenue(
-    {
-      name: "Palat",
+
+  subscriptions: Subscription[] = []
+
+  constructor(private dataService: DataService) {
+    this.updateData()
+  }
+
+  createVenue() {
+    let mockVenueData: Venue = {
+      name: crypto.randomUUID(),
       address: "Palace Str. 3224",
       city: "Oradea",
       state: "Romania",
@@ -19,38 +27,37 @@ export class VenueListComponent implements OnInit {
       country: "Romania",
       capacity: 320,
       type: "Restaurant",
-      createdAt: Date.now(),
-      updatedAt: Date.now()
-    }).subscribe(data => {
-    console.log(data)
-    this.venueData.push(data);
-  })
-
-  constructor(private dataService: DataService) {
+      createdAt: new Date,
+      amenities: ['Pool', 'Jazz Band', 'Smoking area']
+    }
+    this.subscriptions.push(this.dataService.createVenue(mockVenueData).subscribe(data => {
+      this.venueData.push(mockVenueData);
+      this.updateData()
+      console.log(mockVenueData, data);
+    }));
   }
 
-  ngOnInit() {
-    this.dataService.viewVenues().subscribe(data => {
-      this.venueData = data;
-    })
-  }
-
-  viewVenue(id) {
-    console.log(id)
+  bookVenue(venue) {
+    console.log(`Venue ${venue.name} clicked`)
   }
 
   updateData() {
-    this.dataService.viewVenues().subscribe(data => {
+    this.subscriptions.push(this.dataService.viewVenues().subscribe(data => {
       this.venueData = data;
-      console.log('data updated')
-    })
+      console.log('Data updated from API');
+    }));
   }
 
   deleteVenue(id) {
-    this.dataService.deleteVenue(id).subscribe(data => {
+    this.subscriptions.push(this.dataService.deleteVenue(id).subscribe(data => {
       console.log(data)
-      this.updateData()
-    })
-
+      this.venueData = this.venueData.filter(venue => venue._id !== id);
+      console.log('Venue deleted from frontend');
+    }))
   }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
 }

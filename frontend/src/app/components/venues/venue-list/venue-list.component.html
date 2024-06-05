@@ -1,14 +1,12 @@
+<button (click)="createVenue()" class="btn btn-outline-primary">Add Venue</button>
 <ng-container *ngIf="venueData; else noData">
   <app-venue-card
-                  *ngFor="let venue of venueData"
-                  [_id]="venue._id"
-                  [address]="'Palace Street 24'"
-                  [amenities]=""
-                  [capacity]="32"
-                  [name]="venue.name"
-                  [type]="'Restaurant'">
-    <button (click)="viewVenue(venue._id)" class="btn btn-primary">View</button>
-    <button (click)="deleteVenue(venue._id)" class="btn btn-danger">Delete</button>
+    *ngFor="let venue of venueData"
+    [venueCard]="venue">
+    <div class="d-flex flex-row justify-content-between">
+      <button (click)="deleteVenue(venue._id)" class="btn btn-danger">Delete</button>
+      <button [routerLink]="['/venue', venue._id]" (click)="bookVenue(venue)" class="btn btn-primary px-5">Book</button>
+    </div>
   </app-venue-card>
 </ng-container>
 <ng-template #noData>

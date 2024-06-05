@@ -28,7 +28,7 @@ export class DataService {
   }
 
 
-  createVenue(venue: any): Observable<any> {
+  createVenue(venue: Venue): Observable<any> {
     return this.http.post<Venue>(`${this.apiUrl}/create-venue`, venue);
   }
 
@@ -42,5 +42,8 @@ export class DataService {
 
   viewVenues(): Observable<any[]> {
     return this.http.get<Venue[]>(`${this.apiUrl}/view-venues`);
+  }
+  getVenueById(id: string): Observable<Venue> {
+    return this.http.get<Venue>(`${this.apiUrl}/view-venue/${id}`);
   }
 }
