@@ -1,0 +1,65 @@
+<div class="form-container m-auto">
+  <h3>Create Reservation</h3>
+  <form #reservationForm="ngForm" (ngSubmit)="createReservation()" novalidate>
+    <div class="form-group">
+      <label for="customerName">Name:</label>
+      <input #customerName="ngModel" [(ngModel)]="reservation.customerName"
+             [ngClass]="{'is-invalid': reservationForm.touched && customerName.invalid}" class="form-control"
+             id="customerName"
+             minlength="3"
+             name="customerName"
+             required
+             type="text">
+    </div>
+    <div class="form-group">
+      <label for="customerEmail">E-Mail:</label>
+      <input [(ngModel)]="reservation.customerEmail" class="form-control"
+             id="customerEmail"
+             name="customerEmail"
+             type="email">
+    </div>
+    <div class="form-group">
+      <label for="customerPhone">Phone:</label>
+      <input #customerPhone="ngModel" [(ngModel)]="reservation.customerPhone"
+             [ngClass]="{'is-invalid': reservationForm.touched && customerPhone.invalid}" class="form-control"
+             id="customerPhone"
+             name="customerPhone" required
+             type="text">
+    </div>
+    <div class="form-group">
+      <label for="numGuests">Number of guests:</label>
+      <input [(ngModel)]="reservation.numGuests" class="form-control" id="numGuests" name="numGuests"
+             type="number">
+    </div>
+    <div class="form-group">
+      <label for="specialRequests">Special requests:</label>
+      <input [(ngModel)]="reservation.specialRequests" class="form-control" id="specialRequests"
+             name="specialRequests"
+             type="email">
+    </div>
+
+    <div class="form-group">
+      <label for="reservationDate">Reservation Date:</label>
+      <input #reservationDate="ngModel" [(ngModel)]="reservation.reservationDate"
+             [ngClass]="{'is-invalid': reservationForm.touched && reservationDate.invalid}"
+             class="form-control"
+             id="reservationDate" name="reservationDate"
+             required
+             type="date">
+    </div>
+    <div class="form-group">
+      <label for="reservationTime">Reservation Time:</label>
+      <input #reservationTime="ngModel" [(ngModel)]="reservation.reservationTime"
+             [ngClass]="{'is-invalid': reservationForm.touched && reservationTime.invalid}"
+             class="form-control"
+             id="reservationTime" name="reservationTime"
+             required
+             type="time">
+    </div>
+    <div class="button-section d-flex flex-row justify-content-between py-3">
+      <button [routerLink]="['/venues']" class="btn btn-primary px-5 py-3" type="button">Back</button>
+      <button [disabled]="reservationForm.invalid" class="btn btn-success px-5 py-3" type="submit">Reserve</button>
+    </div>
+  </form>
+</div>
+

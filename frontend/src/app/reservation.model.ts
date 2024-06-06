@@ -5,7 +5,7 @@ export interface Reservation {
   customerPhone: string;
   venueId: string;
   venueName: string;
-  reservationDate: string;
+  reservationDate?: Date;
   reservationTime: string;
   numGuests: number;
   specialRequests?: string[];

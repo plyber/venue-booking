@@ -3,7 +3,7 @@ export interface Venue {
   name: string;
   address: string;
   city: string;
-  state: string;
+  state?: string;
   zip: string;
   country: string;
   capacity: number;

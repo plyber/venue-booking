@@ -7,13 +7,15 @@ import { FormsModule } from '@angular/forms';
 import { VenueListComponent } from './components/venues/venue-list/venue-list.component';
 import { VenueCardComponent } from './components/venues/venue-card/venue-card.component';
 import { VenueInfoComponent } from './components/venues/venue-info/venue-info.component';
+import { ReservationFormComponent } from './components/reservations/reservation-form/reservation-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     VenueListComponent,
     VenueCardComponent,
-    VenueInfoComponent
+    VenueInfoComponent,
+    ReservationFormComponent
   ],
   imports: [
     BrowserModule,
