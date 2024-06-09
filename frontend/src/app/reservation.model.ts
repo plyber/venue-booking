@@ -8,6 +8,6 @@ export interface Reservation {
   reservationDate?: Date;
   reservationTime: string;
   numGuests: number;
-  specialRequests?: string[];
+  specialRequests?: string;
   status: 'pending' | 'confirmed' | 'cancelled';
 }

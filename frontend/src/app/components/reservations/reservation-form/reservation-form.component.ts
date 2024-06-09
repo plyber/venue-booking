@@ -14,14 +14,15 @@ export class ReservationFormComponent {
   @Input() currentVenue!: Venue;
 
   reservation: Reservation = {
-    customerName: '',
-    customerEmail: '',
-    customerPhone: '',
     venueId: '',
     venueName: '',
     reservationDate: null,
     reservationTime: '',
+    customerName: '',
+    customerEmail: '',
+    customerPhone: '',
     numGuests: 0,
+    specialRequests: '',
     status: 'pending'
   };
   constructor(private route: ActivatedRoute, private dataService: DataService, private router: Router) {
@@ -38,6 +39,7 @@ export class ReservationFormComponent {
   createReservation(): void {
     const reservationData = {
       venueId: this.currentVenue._id,
+      venueName: this.currentVenue.name,
       reservationDate: new Date(`${this.reservation.reservationDate}T${this.reservation.reservationTime}`),
       customerName: this.reservation.customerName,
       customerEmail: this.reservation.customerEmail,

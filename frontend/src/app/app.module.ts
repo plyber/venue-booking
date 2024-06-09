@@ -8,6 +8,7 @@ import { VenueListComponent } from './components/venues/venue-list/venue-list.co
 import { VenueCardComponent } from './components/venues/venue-card/venue-card.component';
 import { VenueInfoComponent } from './components/venues/venue-info/venue-info.component';
 import { ReservationFormComponent } from './components/reservations/reservation-form/reservation-form.component';
+import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ReservationFormComponent } from './components/reservations/reservation-
     VenueListComponent,
     VenueCardComponent,
     VenueInfoComponent,
-    ReservationFormComponent
+    ReservationFormComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
