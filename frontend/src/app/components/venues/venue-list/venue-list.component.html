@@ -1,14 +1,21 @@
-<button (click)="createVenue()" class="btn btn-outline-primary">Add Venue</button>
+<!--<button (click)="createVenue()" class="btn btn-outline-primary">-->
+<!--  Add Venue-->
+<!--</button>-->
 <ng-container *ngIf="venueData; else noData">
-  <app-venue-card
-    *ngFor="let venue of venueData"
-    [venueCard]="venue">
+  <app-venue-card *ngFor="let venue of venueData" [venueCard]="venue">
     <div class="d-flex flex-row justify-content-between">
-      <button (click)="deleteVenue(venue._id)" class="btn btn-danger">Delete</button>
-      <button [routerLink]="['/venue', venue._id]" (click)="bookVenue(venue)" class="btn btn-primary px-5">Book</button>
+      <button (click)="deleteVenue(venue._id)" class="btn btn-danger">
+        Delete
+      </button>
+      <button
+        [routerLink]="['/venue', venue._id]"
+        (click)="bookVenue(venue)"
+        class="btn btn-primary px-5">
+        Book
+      </button>
     </div>
   </app-venue-card>
 </ng-container>
 <ng-template #noData>
-  Sorry, no data.
+  <app-alert [icon]="'bi bi-exclamation-triangle-fill'" [type]='"danger"'>No venue found.</app-alert>
 </ng-template>

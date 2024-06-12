@@ -1,7 +1,10 @@
 @import 'bootstrap/scss/bootstrap';
-
+@import "bootstrap-icons/font/bootstrap-icons.css";
+@import "variables";
 * {
+  font-family: $font-family;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
+

@@ -1,0 +1,6 @@
+<button class="btn" [class]="style" [type]="type">
+  <ng-container *ngIf="icon">
+    <i [class]="icon"></i>
+  </ng-container>
+  {{text}}
+</button>

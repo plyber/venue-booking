@@ -1,0 +1,75 @@
+<div class='row my-4'>
+  <div class='col '>
+  </div>
+  <div class='col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6'>
+    <div class='card shadow p-4'>
+      <h2 class='card-title'><strong>Dashboard</strong></h2>
+      <hr>
+      <p>ID: <strong>{{user.id}}</strong></p>
+      <p>Username: <strong>{{user.username}}</strong></p>
+      <p>Account Type: <strong style="text-transform: capitalize">{{user.type}}</strong></p>
+      <ng-container *ngIf="dashboardMode==='view' || dashboardMode==='changePassword'" class="account-info">
+        <p>Name: <strong>{{user.name}}</strong></p>
+        <p>Email: <strong>{{user.email}}</strong></p>
+        <p>Phone: <strong>{{user.phone}}</strong></p>
+      </ng-container>
+      <ng-container *ngIf="dashboardMode==='changePassword'">
+        <form #inputForm='ngForm' (ngSubmit)='changePassword()'>
+          <div class="d-flex flex-row">
+            <label for="password">Current: </label><input class="form-control" id="password" type="password" required minlength="6">
+          </div>
+          <div class="d-flex flex-row my-1">
+            <label for="newPassword">New: </label><input id="newPassword" class="form-control" type="password" required minlength="6">
+          </div>
+          <div class="d-flex flex-row">
+            <label for="confirmPassword">Confirm: </label><input id="confirmPassword" class="form-control" type="password" required minlength="6">
+          </div>
+          <div class="d-flex flex-row gap-3 justify-content-between mt-3">
+            <button [disabled]="inputForm.invalid" class="btn btn-success" type="submit"><i class="bi bi-pencil"></i>
+              Change Password
+            </button>
+            <app-button (click)="dashboardMode='view'"
+                        [icon]='"bi bi-x-circle"' [style]="'btn-danger'" [text]='"Cancel"'
+                        [type]='"button"'></app-button>
+          </div>
+        </form>
+      </ng-container>
+      <ng-container *ngIf="dashboardMode==='edit'">
+        <form #inputForm='ngForm' (ngSubmit)='saveInfo()'>
+          <div class="d-flex flex-row">
+            <label>Name: </label><input [(ngModel)]='user.name' class="form-control" id="name" name="name" type="text" required minlength="3">
+          </div>
+          <div class="d-flex flex-row my-1">
+            <label>Email: </label><input [(ngModel)]='user.email' class="form-control" id="email" name="email"
+                                         type="email">
+          </div>
+          <div class="d-flex flex-row">
+            <label>Phone: </label><input [(ngModel)]='user.phone' class="form-control" id="phone" name="phone"
+                                         type="text">
+          </div>
+          <div class="d-flex flex-row gap-3 justify-content-between mt-3">
+
+            <button [disabled]="inputForm.invalid" class="btn btn-success" type="submit"><i class="bi bi-check2"></i>
+              Save Info
+            </button>
+            <app-button (click)="dashboardMode='view'"
+                        [icon]='"bi bi-x-circle"' [style]="'btn-danger'" [text]='"Cancel"'
+                        [type]='"button"'></app-button>
+          </div>
+        </form>
+      </ng-container>
+      <div class="d-flex flex-row gap-3 justify-content-between mt-3">
+        <app-button (click)="dashboardMode='edit'" *ngIf="dashboardMode==='view'" [icon]='"bi bi-pencil"'
+                    [text]='"Edit Info"'
+                    [type]='"button"'></app-button>
+        <app-button (click)="dashboardMode='changePassword'" *ngIf="dashboardMode==='view'" [icon]='"bi bi-pencil"'
+                    [text]='"Change Password"'
+                    [type]='"button"'></app-button>
+      </div>
+        <app-alert class="mt-3" *ngIf='responseMessage' [icon]="'bi bi-exclamation-triangle-fill'"
+                   [type]='"light"'>{{this.responseMessage}}</app-alert>
+    </div>
+  </div>
+  <div class='col '>
+  </div>
+</div>

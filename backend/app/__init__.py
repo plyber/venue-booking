@@ -11,8 +11,9 @@ def create_app():
     mongo.init_app(app)
     CORS(app)
 
-    from app.routes import reservations, venues
+    from app.routes import reservations, venues, authentication
     app.register_blueprint(reservations)
     app.register_blueprint(venues)
+    app.register_blueprint(authentication)
 
     return app

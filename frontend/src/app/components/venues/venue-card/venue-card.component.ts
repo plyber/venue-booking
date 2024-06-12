@@ -1,13 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { Venue } from "../../../venue.model";
+import { Venue } from '../../../shared/models/venue.model';
 
 @Component({
   selector: 'app-venue-card',
   templateUrl: './venue-card.component.html',
-  styleUrls: ['./venue-card.component.scss']
+  styleUrls: ['./venue-card.component.scss'],
 })
 export class VenueCardComponent {
-  @Input() venueCard!:Venue;
-  constructor(){
-  }
+  @Input() venueCard!: Venue;
+  constructor() {}
 }

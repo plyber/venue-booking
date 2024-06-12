@@ -1,0 +1,6 @@
+<div [class]="'alert-'+type" class=' alert' role='alert'>
+  <ng-container *ngIf='icon'>
+    <i class="pe-3" [class]='icon'></i>
+  </ng-container>
+  <ng-content></ng-content>
+</div>

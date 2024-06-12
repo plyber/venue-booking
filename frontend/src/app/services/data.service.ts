@@ -1,32 +1,38 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Venue } from "../venue.model";
+import { Venue } from '../shared/models/venue.model';
+import { ReservationResponse } from '../shared/models/ReservationResponse.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataService {
   private apiUrl = 'http://localhost:5000';
-
-  constructor(private http: HttpClient) { }
-
-  createReservation(reservation: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/create-reservation`, reservation);
+  constructor(private http: HttpClient) {
   }
 
-  updateReservation(id: string, reservation: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/update-reservation/${id}`, reservation);
+  createReservation(reservation: any){
+    return this.http.post<any>(
+      `${this.apiUrl}/create-reservation`,
+      reservation
+    );
+  }
+
+  updateReservation(id: string, reservation: any){
+    return this.http.put<any>(
+      `${this.apiUrl}/update-reservation/${id}`,
+      reservation
+    );
   }
 
   deleteReservation(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/delete-reservation/${id}`);
   }
 
-  viewReservations(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/view-reservations`);
+  viewReservationsByUserId(): Observable<ReservationResponse[]> {
+    return this.http.get<ReservationResponse[]>(`${this.apiUrl}/view-reservations`);
   }
-
 
   createVenue(venue: Venue): Observable<any> {
     return this.http.post<Venue>(`${this.apiUrl}/create-venue`, venue);

@@ -1,0 +1,63 @@
+<div class='container'>
+  <div class='row justify-content-center mt-4'>
+    <div class='col col-md-12 col-lg-6 align-self-center shadow card pt-4 px-4'>
+      <h2 style='text-transform: capitalize'>{{mode}}</h2>
+      <form #inputForm='ngForm' (ngSubmit)='submit()' novalidate>
+        <div class='form-group mt-3'>
+          <label for='username'>Username:</label>
+          <input
+            #username
+            [(ngModel)]='credentials.username'
+            class='form-control'
+            id='username'
+            minlength='3'
+            name='username'
+            required
+            type='text' />
+          <p *ngIf='username.validity.tooShort' class='form-text text-danger'>Please provide a valid username.</p>
+        </div>
+        <div class='form-group mt-3'>
+          <label for='password'>Password:</label>
+          <input
+            #password
+            [(ngModel)]='credentials.password'
+            class='form-control'
+            id='password'
+            minlength='6'
+            name='password'
+            required
+            type='password' />
+          <p *ngIf='password.validity.tooShort' class='form-text text-danger'>Please provide a valid password.</p>
+
+        </div>
+        <div *ngIf='mode==="register"' class='form-group mt-3'>
+          <label class='form-check-label' for='venueAccountType'>
+            <input #venueAccountType [(ngModel)]='credentials.accountType' class='form-check-input'
+                   id='venueAccountType'
+                   name='accountType' required
+                   type='radio' value='venue'>
+            Venue
+          </label>
+          <label class='form-check-label  ms-3' for='customerAccountType'>
+            <input #customerAccountType [(ngModel)]='credentials.accountType' class='form-check-input'
+                   id='customerAccountType' name='accountType' required
+                   type='radio' value='customer'>
+            Customer
+          </label>
+          <p
+            *ngIf='inputForm.submitted && (venueAccountType.validity.valueMissing || customerAccountType.validity.valueMissing)'
+            class='form-text text-danger'>
+            Please select an account type.</p>
+        </div>
+        <button [disabled]='inputForm.invalid'
+                [ngClass]="{'btn-outline-primary':mode==='login', 'btn-outline-success':mode==='register'}"
+                class='btn my-3'
+                style='text-transform: capitalize;'
+                type='submit'>{{mode}}
+        </button>
+        <app-alert *ngIf='inputForm.submitted && responseMessage' [icon]="'bi bi-exclamation-triangle-fill'"
+                   [type]='"light"'>{{this.responseMessage}}</app-alert>
+      </form>
+    </div>
+  </div>
+</div>

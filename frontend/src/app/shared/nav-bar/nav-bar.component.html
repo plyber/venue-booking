@@ -1,6 +1,23 @@
-<nav class='navbar navbar-expand-lg navbar-light bg-light'>
-  <a class='navbar-brand' href='/'>Venue Booking</a>
-  <ul>
-    <li *ngFor='let item of navbarItems'><a href='{{item.link}}'>{{item.name}}</a></li>
+<nav class='d-flex flex-row justify-content-between shadow w-100 py-2'>
+  <ul class='d-flex flex-row list-unstyled my-auto'>
+    <li *ngFor='let item of navbarItems'>
+      <a class='link-item d-flex flex-row align-items-center my-auto p-2 mx-2' href='{{ item.link }}'>
+        <i class="{{item.iconClass}} px-1"></i>
+        {{ item.name }}
+      </a>
+    </li>
   </ul>
+  <div class='d-flex flex-row justify-content-end align-items-center me-4'>
+    <ng-container *ngIf='isLoggedIn; then loggedIn; else loggedOut'></ng-container>
+    <ng-template #loggedIn>
+      <p></p>
+      <button [routerLink]="['/dashboard']" class='btn btn-primary ms-4'>My Account</button>
+      <button (click)='logOut()' class='btn btn-primary ms-2'>Log Out</button>
+    </ng-template>
+    <ng-template #loggedOut>
+      <button [routerLink]="['/register']" class='btn btn-outline-success ms-4'>Register</button>
+      <button (click)='logIn()' [routerLink]="['/log-in']" class='btn btn-primary ms-2'>Log In</button>
+    </ng-template>
+
+  </div>
 </nav>

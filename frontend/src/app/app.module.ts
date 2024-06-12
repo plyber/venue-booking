@@ -9,6 +9,11 @@ import { VenueCardComponent } from './components/venues/venue-card/venue-card.co
 import { VenueInfoComponent } from './components/venues/venue-info/venue-info.component';
 import { ReservationFormComponent } from './components/reservations/reservation-form/reservation-form.component';
 import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
+import { ReservationListComponent } from './components/reservations/reservation-list/reservation-list.component';
+import { AlertComponent } from './shared/alert/alert.component';
+import { AuthenticationComponent } from './components/authentication/authentication.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ButtonComponent } from './shared/button/button.component';
 
 @NgModule({
   declarations: [
@@ -17,16 +22,15 @@ import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
     VenueCardComponent,
     VenueInfoComponent,
     ReservationFormComponent,
-    NavBarComponent
+    NavBarComponent,
+    ReservationListComponent,
+    AlertComponent,
+    AuthenticationComponent,
+    DashboardComponent,
+    ButtonComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

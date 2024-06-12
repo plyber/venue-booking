@@ -1,0 +1,47 @@
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { User } from '../../shared/models/user';
+
+@Component({
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss'],
+})
+export class DashboardComponent implements OnInit {
+  dashboardMode: 'edit' | 'view' | 'changePassword' = 'view';
+  protected user?: User;
+  responseMessage:string;
+  constructor(private authService: AuthService) {
+    this.authService.getUserInfo().subscribe(response => {
+      this.user = response.user;
+    });
+  }
+
+  ngOnInit() {
+
+  }
+
+  changePassword() {
+    console.log(this.dashboardMode);
+    this.responseMessage='Password changed successfully.'
+    setTimeout(()=>{
+      this.responseMessage=null;
+    },1000)
+  }
+
+  saveInfo() {
+    console.log();
+    this.dashboardMode = 'view';
+    this.authService.saveUser({
+      id: this.user.id,
+      name: this.user.name,
+      email: this.user.email,
+      phone: this.user.phone,
+    }).subscribe(response => {
+      this.responseMessage=response.message;
+      setTimeout(()=>{
+        this.responseMessage=null;
+      },1000)
+    });
+  }
+}

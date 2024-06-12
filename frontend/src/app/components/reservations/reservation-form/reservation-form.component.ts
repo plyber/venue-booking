@@ -1,52 +1,74 @@
-import { Component, Input} from '@angular/core';
-import { DataService } from "../../../services/data.service";
-import { Reservation } from "../../../reservation.model";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Venue } from "../../../venue.model";
-
+import { Component, Input, OnDestroy } from '@angular/core';
+import { DataService } from '../../../services/data.service';
+import { ReservationRequest } from '../../../shared/models/ReservationRequest.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Venue } from '../../../shared/models/venue.model';
+import { ReservationResponse } from '../../../shared/models/ReservationResponse.model';
+import { AuthService } from "../../../services/auth.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'app-reservation-form',
   templateUrl: './reservation-form.component.html',
-  styleUrls: ['./reservation-form.component.scss']
+  styleUrls: ['./reservation-form.component.scss'],
 })
-export class ReservationFormComponent {
+export class ReservationFormComponent implements OnDestroy {
   @Input() currentVenue!: Venue;
-
-  reservation: Reservation = {
+  sub: Subscription[]=[];
+  reservation: ReservationRequest = {
     venueId: '',
     venueName: '',
     reservationDate: null,
-    reservationTime: '',
+    reservationTime: null,
+    customerId: '',
     customerName: '',
     customerEmail: '',
     customerPhone: '',
     numGuests: 0,
     specialRequests: '',
-    status: 'pending'
+    status: 'pending',
   };
-  constructor(private route: ActivatedRoute, private dataService: DataService, private router: Router) {
+
+  constructor(
+    private route: ActivatedRoute,
+    private dataService: DataService,
+    private router: Router,
+    private authService: AuthService
+  ) {
+    this.sub.push(this.authService.getUserInfo().subscribe(res => {
+      this.reservation.customerName = res.user.name;
+      this.reservation.customerId = res.user.id;
+      this.reservation.customerEmail = res.user.email;
+      this.reservation.customerPhone = res.user.phone;
+    }))
     const venueId = this.route.snapshot.paramMap.get('id');
     if (venueId) {
-      this.dataService.getVenueById(venueId).subscribe(data => {
+      this.sub.push(this.dataService.getVenueById(venueId).subscribe(data => {
         this.reservation.venueId = this.currentVenue._id || '';
         this.reservation.venueName = this.currentVenue.name;
-        console.log('found entry!', data, `\n Form acquired reservation ID: ${this.reservation.venueId} \n Form acquired reservation name: ${this.reservation.venueName}`)
-      });
+        console.log(
+          'found entry!',
+          data,
+          `\n Form acquired reservation ID: ${this.reservation.venueId} \n Form acquired reservation name: ${this.reservation.venueName}`
+        );
+      }));
     }
-
   }
+
   createReservation(): void {
-    const reservationData = {
+    const reservationData: ReservationResponse = {
       venueId: this.currentVenue._id,
       venueName: this.currentVenue.name,
-      reservationDate: new Date(`${this.reservation.reservationDate}T${this.reservation.reservationTime}`),
+      reservationDateTime: new Date(
+        `${this.reservation.reservationDate}T${this.reservation.reservationTime}`
+      ).toString(),
+      customerId: this.reservation.customerId,
       customerName: this.reservation.customerName,
       customerEmail: this.reservation.customerEmail,
       customerPhone: this.reservation.customerPhone,
       numGuests: this.reservation.numGuests,
       specialRequests: this.reservation.specialRequests,
-      status: 'pending'
+      status: 'pending',
     };
 
     this.dataService.createReservation(reservationData).subscribe(response => {
@@ -54,4 +76,9 @@ export class ReservationFormComponent {
       this.router.navigate(['/venues']);
     });
   }
+
+  ngOnDestroy(): void {
+    this.sub.forEach(sub => sub.unsubscribe())
+  }
+
 }
