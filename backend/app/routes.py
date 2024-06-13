@@ -4,6 +4,8 @@ from bson import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 from datetime import datetime, timedelta
+from functools import wraps
+
 
 SECRET_KEY = 'SECRETRESERVATIONAPPKEY000'
 
@@ -11,12 +13,36 @@ reservations = Blueprint('reservations', __name__)
 venues = Blueprint('venues', __name__)
 authentication = Blueprint('users', __name__)
 
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = request.headers.get('Authorization')
+        if not token:
+            return jsonify({'message': 'Token is missing'}), 403
+        try:
+            token = token.split(" ")[1]
+            data = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+            current_user = mongo.db.users.find_one({'_id': ObjectId(data['user_id'])})
+            if current_user is None:
+                return jsonify({'message': 'User not found'}), 403
+        except jwt.ExpiredSignatureError:
+            return jsonify({'message': 'Token expired'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'message': 'Invalid token'}), 403
+        except Exception as e:
+            print(f"Error decoding token: {e}")
+            return jsonify({'message': 'Token is invalid'}), 403
+        return f(current_user, *args, **kwargs)
+    return decorated
 
 @reservations.route('/create-reservation', methods=['POST'])
-def create_reservation():
+@token_required
+def create_reservation(current_user):
     data = request.json
+    data['customerId'] = str(current_user['_id'])
     reservation_id = mongo.db.reservations.insert_one(data).inserted_id
     return jsonify({'_id': str(reservation_id)}), 201
+
 
 
 @reservations.route('/update-reservation/<reservation_id>', methods=['PUT'])
@@ -33,11 +59,16 @@ def delete_reservation(reservation_id):
 
 
 @reservations.route('/view-reservations', methods=['GET'])
-def view_reservations():
-    reservations = list(mongo.db.reservations.find())
+@token_required
+def view_reservations(current_user):
+    user_id = str(current_user['_id'])
+    print(f"Fetching reservations for user_id: {user_id}")  # Debug statement
+    reservations = list(mongo.db.reservations.find({'customerId': user_id}))
+    print(f"Reservations found for user {user_id}: {reservations}")  # Debug statement
     for reservation in reservations:
         reservation['_id'] = str(reservation['_id'])
     return jsonify(reservations), 200
+
 
 
 @venues.route('/create-venue', methods=['POST'])
@@ -51,13 +82,13 @@ def create_venue():
 def update_venue(venue_id):
     data = request.json
     mongo.db.venues.update_one({'_id': ObjectId(venue_id)}, {'$set': data})
-    return jsonify({'msg': 'Venue updated'}), 200
+    return jsonify({'msg': 'VenueService updated'}), 200
 
 
 @venues.route('/delete-venue/<venue_id>', methods=['DELETE'])
 def delete_venue(venue_id):
     mongo.db.venues.delete_one({'_id': ObjectId(venue_id)})
-    return jsonify({'msg': 'Venue deleted'}), 200
+    return jsonify({'msg': 'VenueService deleted'}), 200
 
 
 @venues.route('/view-venues', methods=['GET'])
@@ -75,7 +106,7 @@ def view_venue(venue_id):
         venue['_id'] = str(venue['_id'])
         return jsonify(venue), 200
     else:
-        return jsonify({'error': 'Venue not found'}), 404
+        return jsonify({'error': 'VenueService not found'}), 404
 
 
 @authentication.route('/register', methods=['POST'])
@@ -157,3 +188,4 @@ def save_user():
         return jsonify({'message': 'User info updated'}), 200
     else:
         return jsonify({'message': 'User not found'}), 404
+

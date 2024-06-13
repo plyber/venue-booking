@@ -10,7 +10,7 @@
         <p>Name: {{this.reservation.customerName}}</p>
         <p>Email: {{this.reservation.customerEmail}}</p>
         <p>Phone: {{this.reservation.customerPhone}}</p>
-        <p>Venue Name:
+        <p>VenueService Name:
           <a [routerLink]="['/venue', reservation.venueId]" href=''>{{this.reservation.venueName}}
             <i class='bi bi-box-arrow-up-right'></i>
           </a>
@@ -27,7 +27,7 @@
   <div class="row" style="margin-top:12rem">
     <div class="col col-md-5 col-lg-5 align-self-center m-auto shadow card p-4">
       <!--      <app-alert [icon]="'bi bi-exclamation-triangle-fill'" [type]='"danger"'>No reservation found.</app-alert>-->
-      <h2>Browse venues and book a Venue!</h2>
+      <h2>Browse venues and book a VenueService!</h2>
       <p>Explore hundreds of venues and restaurants and create a reservation. It will appear in this section.</p>
       <app-button [icon]="'bi bi-shop'" [routerLink]="['/venues']" [style]="'btn-outline-success'" [text]="'Browse'"
                   class="align-self-center"></app-button>

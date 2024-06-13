@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { DataService } from '../../../services/data.service';
+import { VenueService } from '../../../services/venue.service';
 import { Venue } from '../../../shared/models/venue.model';
 import { Subscription } from 'rxjs';
 
@@ -13,7 +13,7 @@ export class VenueListComponent implements OnDestroy {
 
   subscriptions: Subscription[] = [];
 
-  constructor(private dataService: DataService) {
+  constructor(private venueService: VenueService) {
     this.updateData();
   }
 
@@ -31,7 +31,7 @@ export class VenueListComponent implements OnDestroy {
       amenities: ['Pool', 'Jazz Band', 'Smoking area'],
     };
     this.subscriptions.push(
-      this.dataService.createVenue(mockVenueData).subscribe(data => {
+      this.venueService.createVenue(mockVenueData).subscribe(data => {
         this.venueData.push(mockVenueData);
         this.updateData();
         console.log(mockVenueData, data);
@@ -45,7 +45,7 @@ export class VenueListComponent implements OnDestroy {
 
   updateData() {
     this.subscriptions.push(
-      this.dataService.viewVenues().subscribe(data => {
+      this.venueService.viewVenues().subscribe(data => {
         this.venueData = data;
         console.log('Data updated from API');
       })
@@ -54,10 +54,10 @@ export class VenueListComponent implements OnDestroy {
 
   deleteVenue(id) {
     this.subscriptions.push(
-      this.dataService.deleteVenue(id).subscribe(data => {
+      this.venueService.deleteVenue(id).subscribe(data => {
         console.log(data);
         this.venueData = this.venueData.filter(venue => venue._id !== id);
-        console.log('Venue deleted from frontend');
+        console.log('VenueService deleted from frontend');
       })
     );
   }

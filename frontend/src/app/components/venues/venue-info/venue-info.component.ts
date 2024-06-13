@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DataService } from '../../../services/data.service';
+import { VenueService } from '../../../services/venue.service';
 import { Venue } from '../../../shared/models/venue.model';
 
 @Component({
@@ -13,7 +13,7 @@ export class VenueInfoComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private dataService: DataService
+    private dataService: VenueService
   ) {
     const venueId = this.route.snapshot.paramMap.get('id');
     if (venueId) {

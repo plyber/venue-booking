@@ -1,11 +1,12 @@
 import { Component, Input, OnDestroy } from '@angular/core';
-import { DataService } from '../../../services/data.service';
+import { VenueService } from '../../../services/venue.service';
 import { ReservationRequest } from '../../../shared/models/ReservationRequest.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Venue } from '../../../shared/models/venue.model';
 import { ReservationResponse } from '../../../shared/models/ReservationResponse.model';
 import { AuthService } from "../../../services/auth.service";
 import { Subscription } from "rxjs";
+import { ReservationService } from "../../../services/reservation.service";
 
 @Component({
   selector: 'app-reservation-form',
@@ -31,7 +32,8 @@ export class ReservationFormComponent implements OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private dataService: DataService,
+    private reservationService: ReservationService,
+    private venueService: VenueService,
     private router: Router,
     private authService: AuthService
   ) {
@@ -43,7 +45,7 @@ export class ReservationFormComponent implements OnDestroy {
     }))
     const venueId = this.route.snapshot.paramMap.get('id');
     if (venueId) {
-      this.sub.push(this.dataService.getVenueById(venueId).subscribe(data => {
+      this.sub.push(this.venueService.getVenueById(venueId).subscribe(data => {
         this.reservation.venueId = this.currentVenue._id || '';
         this.reservation.venueName = this.currentVenue.name;
         console.log(
@@ -71,7 +73,7 @@ export class ReservationFormComponent implements OnDestroy {
       status: 'pending',
     };
 
-    this.dataService.createReservation(reservationData).subscribe(response => {
+    this.reservationService.createReservation(reservationData).subscribe(response => {
       console.log('Reservation created:', reservationData, response);
       this.router.navigate(['/venues']);
     });

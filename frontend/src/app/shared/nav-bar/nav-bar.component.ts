@@ -13,7 +13,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
   sub:Subscription;
   navbarItems = [
     {
-      name: 'Venue Booking',
+      name: 'VenueService Booking',
       link: '/',
       iconClass:"bi bi-shop"
 

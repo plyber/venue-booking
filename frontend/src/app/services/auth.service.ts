@@ -47,8 +47,7 @@ export class AuthService {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Authorization': token
-    }); //TODO Store auth in a variable to avoid calling backend
-
+    });
     return this.http.get<User>(`${this.apiUrl}/user-info`, {headers})
       .pipe(
         tap(res => {
