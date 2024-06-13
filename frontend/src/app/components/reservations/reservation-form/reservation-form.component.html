@@ -1,6 +1,6 @@
 <div class="form-container m-auto">
   <h2>Make a Reservation!</h2>
-  <hr />
+  <hr/>
   <form #reservationForm="ngForm" (ngSubmit)="createReservation()" novalidate>
     <div class="form-group">
       <label for="customerName">Name:</label>
@@ -15,7 +15,7 @@
         minlength="3"
         name="customerName"
         required
-        type="text" />
+        type="text"/>
     </div>
 
     <div class="form-group">
@@ -25,7 +25,7 @@
         class="form-control"
         id="customerEmail"
         name="customerEmail"
-        type="email" />
+        type="email"/>
     </div>
     <div class="form-group">
       <label for="customerPhone">Phone:</label>
@@ -39,7 +39,7 @@
         id="customerPhone"
         name="customerPhone"
         required
-        type="text" />
+        type="text"/>
     </div>
     <div class="form-group">
       <label for="numGuests">Number of guests:</label>
@@ -48,7 +48,7 @@
         class="form-control"
         id="numGuests"
         name="numGuests"
-        type="number" />
+        type="number"/>
     </div>
     <div class="form-group">
       <label for="specialRequests">Special requests:</label>
@@ -57,7 +57,7 @@
         class="form-control"
         id="specialRequests"
         name="specialRequests"
-        type="email" />
+        type="email"/>
     </div>
 
     <div class="form-group">
@@ -72,7 +72,7 @@
         id="reservationDate"
         name="reservationDate"
         required
-        type="date" />
+        type="date"/>
     </div>
     <div class="form-group">
       <label for="reservationTime">Reservation Time:</label>
@@ -86,7 +86,7 @@
         id="reservationTime"
         name="reservationTime"
         required
-        type="time" />
+        type="time"/>
     </div>
     <div class="button-section d-flex flex-row justify-content-between py-3">
       <button

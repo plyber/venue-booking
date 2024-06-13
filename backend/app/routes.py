@@ -36,10 +36,8 @@ def token_required(f):
     return decorated
 
 @reservations.route('/create-reservation', methods=['POST'])
-@token_required
-def create_reservation(current_user):
+def create_reservation():
     data = request.json
-    data['customerId'] = str(current_user['_id'])
     reservation_id = mongo.db.reservations.insert_one(data).inserted_id
     return jsonify({'_id': str(reservation_id)}), 201
 

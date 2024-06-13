@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ReservationResponse } from '../../../shared/models/ReservationResponse.model';
-import { AuthService } from "../../../services/auth.service";
 import { ReservationService } from "../../../services/reservation.service";
 import { Subscription } from "rxjs";
+import { User } from "../../../shared/models/user";
 
 @Component({
   selector: 'app-reservation-info',
@@ -12,15 +12,13 @@ import { Subscription } from "rxjs";
 export class ReservationListComponent implements OnInit, OnDestroy {
   reservationsList!: ReservationResponse[];
   private subscriptions: Subscription = new Subscription();
+  protected user?:User;
 
-  constructor(private reservationService: ReservationService, private authService: AuthService) {
+  constructor(private reservationService: ReservationService) {
   }
 
   ngOnInit() {
-    this.subscriptions.add(this.authService.getUserInfo().subscribe(res => {
-      console.log('CurrentUserID' + res.user.id)
-      this.loadReservations()
-    }))
+    this.loadReservations()
   }
 
   loadReservations() {

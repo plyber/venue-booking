@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { User } from "../models/user";
 
 @Component({
   selector: 'app-nav-bar',
@@ -10,10 +11,11 @@ import { Subscription } from 'rxjs';
 })
 export class NavBarComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean;
-  sub:Subscription;
+  protected user?: User;
+  private sub:Subscription = new Subscription();
   navbarItems = [
     {
-      name: 'VenueService Booking',
+      name: 'Venue Booking',
       link: '/',
       iconClass:"bi bi-shop"
 
@@ -31,14 +33,16 @@ export class NavBarComponent implements OnInit, OnDestroy {
   ];
 
   constructor(private authService: AuthService, private router:Router) {
-
+    this.sub.add(this.authService.getUserInfo().subscribe(response => {
+      this.user = response.user;
+    }));
   }
 
   ngOnInit() {
     this.isLoggedIn = this.authService.hasToken();
-    this.sub = this.authService.isLoggedIn.subscribe(response => {
+    this.sub.add(this.authService.isLoggedIn.subscribe(response => {
       this.isLoggedIn = response;
-    });
+    }));
   }
 
 

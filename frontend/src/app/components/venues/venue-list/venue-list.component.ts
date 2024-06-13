@@ -51,7 +51,7 @@ export class VenueListComponent implements OnDestroy {
     );
   }
 
-  deleteVenue(id) {
+  bookmarkVenue(id) {
     this.subscriptions.add(
       this.venueService.deleteVenue(id).subscribe(data => {
         console.log(data);

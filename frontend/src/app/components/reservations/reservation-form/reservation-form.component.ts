@@ -15,7 +15,7 @@ import { ReservationService } from "../../../services/reservation.service";
 })
 export class ReservationFormComponent implements OnDestroy {
   @Input() currentVenue!: Venue;
-  sub: Subscription[]=[];
+  private subscriptions: Subscription = new Subscription();
   reservation: ReservationRequest = {
     venueId: '',
     venueName: '',
@@ -34,10 +34,10 @@ export class ReservationFormComponent implements OnDestroy {
     private route: ActivatedRoute,
     private reservationService: ReservationService,
     private venueService: VenueService,
-    private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
-    this.sub.push(this.authService.getUserInfo().subscribe(res => {
+    this.subscriptions.add(this.authService.getUserInfo().subscribe(res => {
       this.reservation.customerName = res.user.name;
       this.reservation.customerId = res.user.id;
       this.reservation.customerEmail = res.user.email;
@@ -45,7 +45,7 @@ export class ReservationFormComponent implements OnDestroy {
     }))
     const venueId = this.route.snapshot.paramMap.get('id');
     if (venueId) {
-      this.sub.push(this.venueService.getVenueById(venueId).subscribe(data => {
+      this.subscriptions.add(this.venueService.getVenueById(venueId).subscribe(data => {
         this.reservation.venueId = this.currentVenue._id || '';
         this.reservation.venueName = this.currentVenue.name;
         console.log(
@@ -72,15 +72,14 @@ export class ReservationFormComponent implements OnDestroy {
       specialRequests: this.reservation.specialRequests,
       status: 'pending',
     };
-
-    this.reservationService.createReservation(reservationData).subscribe(response => {
+    this.subscriptions.add(this.reservationService.createReservation(reservationData).subscribe(response => {
       console.log('Reservation created:', reservationData, response);
       this.router.navigate(['/venues']);
-    });
+    }));
   }
 
   ngOnDestroy(): void {
-    this.sub.forEach(sub => sub.unsubscribe())
+    this.subscriptions.unsubscribe()
   }
 
 }
