@@ -1,7 +1,7 @@
 <nav class='d-flex flex-row justify-content-between shadow w-100 py-2'>
   <ul class='d-flex flex-row list-unstyled my-auto'>
     <li *ngFor='let item of navbarItems'>
-      <a class='link-item d-flex flex-row align-items-center my-auto p-2 mx-2' href='{{ item.link }}'>
+      <a class='link-item d-flex flex-row align-items-center my-auto p-2 mx-2 fw-bolder' href='{{ item.link }}'>
         <i class="{{item.iconClass}} px-1"></i>
         {{ item.name }}
       </a>
@@ -10,9 +10,11 @@
   <div class='d-flex flex-row justify-content-end align-items-center me-4'>
     <ng-container *ngIf='isLoggedIn; then loggedIn; else loggedOut'></ng-container>
     <ng-template #loggedIn>
-      <p></p>
-      <button [routerLink]="['/dashboard']" class='btn btn-primary ms-4'>My Account</button>
-      <button (click)='logOut()' class='btn btn-primary ms-2'>Log Out</button>
+      <div class="d-flex flex-row align-items-center text-center">
+        <p class="mb-0 text-capitalize"><strong>{{user.name}}</strong> | {{user.type}}</p>
+        <button [routerLink]="['/dashboard']" class='btn btn-primary ms-4'>My Account</button>
+        <button (click)='logOut()' class='btn btn-primary ms-2'>Log Out</button>
+      </div>
     </ng-template>
     <ng-template #loggedOut>
       <button [routerLink]="['/register']" class='btn btn-outline-success ms-4'>Register</button>

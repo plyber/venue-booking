@@ -21,6 +21,7 @@ export class VenueListComponent implements OnDestroy {
     let mockVenueData: Venue = {
       name: crypto.randomUUID(),
       address: 'Palace Str. 3224',
+      ownerId: '666995ded955b05942570872',
       city: 'Oradea',
       state: 'Romania',
       zip: '370002',
@@ -51,7 +52,7 @@ export class VenueListComponent implements OnDestroy {
     );
   }
 
-  deleteVenue(id) {
+  bookmarkVenue(id) {
     this.subscriptions.add(
       this.venueService.deleteVenue(id).subscribe(data => {
         console.log(data);

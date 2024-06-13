@@ -36,10 +36,8 @@ def token_required(f):
     return decorated
 
 @reservations.route('/create-reservation', methods=['POST'])
-@token_required
-def create_reservation(current_user):
+def create_reservation():
     data = request.json
-    data['customerId'] = str(current_user['_id'])
     reservation_id = mongo.db.reservations.insert_one(data).inserted_id
     return jsonify({'_id': str(reservation_id)}), 201
 
@@ -98,6 +96,14 @@ def view_venues():
         venue['_id'] = str(venue['_id'])
     return jsonify(venues), 200
 
+@venues.route('/view-owner-venues', methods=['GET'])
+@token_required
+def view_owner_venues(current_user):
+    user_id = str(current_user['_id'])
+    owner_venues = list(mongo.db.venues.find({'ownerId': user_id}))
+    for venue in owner_venues:
+        venue['_id'] = str(venue['_id'])
+    return jsonify(owner_venues), 200
 
 @venues.route('/view-venue/<venue_id>', methods=['GET'])
 def view_venue(venue_id):

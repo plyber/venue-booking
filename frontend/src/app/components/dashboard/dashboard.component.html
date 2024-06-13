@@ -1,17 +1,17 @@
 <div class='row my-4'>
   <div class='col '>
   </div>
-  <div class='col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6'>
+  <div class='col col-sm-12 col-md-12 col-lg-6 col-xl-6'>
     <div class='card shadow p-4'>
       <h2 class='card-title'><strong>Dashboard</strong></h2>
       <hr>
-      <p>ID: <strong>{{user.id}}</strong></p>
-      <p>Username: <strong>{{user.username}}</strong></p>
-      <p>Account Type: <strong style="text-transform: capitalize">{{user.type}}</strong></p>
+      <p><strong>ID: </strong>{{user.id}}</p>
+      <p><strong>Username: </strong>{{user.username}}</p>
+      <p class="text-capitalize"><strong>Account Type: </strong>{{user.type}}</p>
       <ng-container *ngIf="dashboardMode==='view' || dashboardMode==='changePassword'" class="account-info">
-        <p>Name: <strong>{{user.name}}</strong></p>
-        <p>Email: <strong>{{user.email}}</strong></p>
-        <p>Phone: <strong>{{user.phone}}</strong></p>
+        <p><strong>Name: </strong>{{user.name}}</p>
+        <p><strong>Email: </strong>{{user.email}}</p>
+        <p><strong>Phone: </strong>{{user.phone}}</p>
       </ng-container>
       <ng-container *ngIf="dashboardMode==='changePassword'">
         <form #inputForm='ngForm' (ngSubmit)='changePassword()'>

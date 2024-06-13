@@ -11,12 +11,11 @@ export class AuthService {
 
   private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
   private apiUrl = 'http://localhost:5000';
-  private userInfo?: any;
-  currentUser;
+  userInfo?: any;
 
   constructor(private http: HttpClient) {
     this.getUserInfo().subscribe(response=>{
-      this.currentUser=response.user;
+      this.userInfo=response.user;
     })
   }
 

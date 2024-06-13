@@ -14,6 +14,8 @@ import { AlertComponent } from './shared/alert/alert.component';
 import { AuthenticationComponent } from './components/authentication/authentication.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ButtonComponent } from './shared/button/button.component';
+import { MyVenuesListComponent } from './components/venues/my-venues-list/my-venues-list.component';
+import { VenueFormComponent } from './components/venues/venue-form/venue-form.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { ButtonComponent } from './shared/button/button.component';
     AuthenticationComponent,
     DashboardComponent,
     ButtonComponent,
+    MyVenuesListComponent,
+    VenueFormComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],
