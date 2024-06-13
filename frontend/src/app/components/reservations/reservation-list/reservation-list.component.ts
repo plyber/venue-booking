@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ReservationResponse } from '../../../shared/models/ReservationResponse.model';
 import { ReservationService } from "../../../services/reservation.service";
 import { Subscription } from "rxjs";
+import { User } from "../../../shared/models/user";
 
 @Component({
   selector: 'app-reservation-info',
@@ -11,6 +12,7 @@ import { Subscription } from "rxjs";
 export class ReservationListComponent implements OnInit, OnDestroy {
   reservationsList!: ReservationResponse[];
   private subscriptions: Subscription = new Subscription();
+  protected user?:User;
 
   constructor(private reservationService: ReservationService) {
   }
