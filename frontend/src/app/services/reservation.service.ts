@@ -64,7 +64,8 @@ export class ReservationService {
     if (this.reservationsCache) {
       return of(this.reservationsCache);
     }
-    return this.http.get<ReservationResponse[]>(
+      console.log('Data updated from API');
+      return this.http.get<ReservationResponse[]>(
       `${this.apiUrl}/view-reservations`,
       this.getAuthHeaders()
     ).pipe(

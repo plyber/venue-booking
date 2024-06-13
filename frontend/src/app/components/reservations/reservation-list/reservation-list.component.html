@@ -1,7 +1,7 @@
-<ng-container *ngIf='reservations; else noData'>
+<ng-container *ngIf='reservationsList; else noData'>
   <div class="row">
     <div class="col">
-      <div *ngFor='let reservation of reservations; let i = index' class='col col-md-8 col-lg-6 m-auto p-4 shadow card my-4'
+      <div *ngFor='let reservation of reservationsList; let i = index' class='col col-md-8 col-lg-6 m-auto p-4 shadow card my-4'
            style='max-width: 64rem'>
         <p>index: {{i}}</p>
         <p>Reservation ID: {{this.reservation._id}}</p>

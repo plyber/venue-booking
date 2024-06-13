@@ -1,8 +1,8 @@
 <!--<button (click)="createVenue()" class="btn btn-outline-primary">-->
 <!--  Add VenueService-->
 <!--</button>-->
-<ng-container *ngIf="venueData; else noData">
-  <app-venue-card *ngFor="let venue of venueData" [venueCard]="venue">
+<ng-container *ngIf="venuesList; else noData">
+  <app-venue-card *ngFor="let venue of venuesList" [venueCard]="venue">
     <div class="d-flex flex-row justify-content-between">
       <button (click)="deleteVenue(venue._id)" class="btn btn-danger">
         Delete

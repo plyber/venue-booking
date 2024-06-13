@@ -9,12 +9,12 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./venue-list.component.scss'],
 })
 export class VenueListComponent implements OnDestroy {
-  venueData!: Venue[];
+  venuesList!: Venue[];
 
-  subscriptions: Subscription[] = [];
+  private subscriptions: Subscription = new Subscription();
 
   constructor(private venueService: VenueService) {
-    this.updateData();
+    this.loadVenues();
   }
 
   createVenue() {
@@ -30,10 +30,10 @@ export class VenueListComponent implements OnDestroy {
       createdAt: new Date(),
       amenities: ['Pool', 'Jazz Band', 'Smoking area'],
     };
-    this.subscriptions.push(
+    this.subscriptions.add(
       this.venueService.createVenue(mockVenueData).subscribe(data => {
-        this.venueData.push(mockVenueData);
-        this.updateData();
+        this.venuesList.push(mockVenueData);
+        this.loadVenues();
         console.log(mockVenueData, data);
       })
     );
@@ -43,26 +43,25 @@ export class VenueListComponent implements OnDestroy {
     console.log(`Venue ${venue.name} clicked`);
   }
 
-  updateData() {
-    this.subscriptions.push(
+  loadVenues() {
+    this.subscriptions.add(
       this.venueService.viewVenues().subscribe(data => {
-        this.venueData = data;
-        console.log('Data updated from API');
+        this.venuesList = data.length > 0 ? data : [];
       })
     );
   }
 
   deleteVenue(id) {
-    this.subscriptions.push(
+    this.subscriptions.add(
       this.venueService.deleteVenue(id).subscribe(data => {
         console.log(data);
-        this.venueData = this.venueData.filter(venue => venue._id !== id);
+        this.venuesList = this.venuesList.filter(venue => venue._id !== id);
         console.log('VenueService deleted from frontend');
       })
     );
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.subscriptions.unsubscribe();
   }
 }

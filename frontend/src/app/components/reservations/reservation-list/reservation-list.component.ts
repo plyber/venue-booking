@@ -10,7 +10,7 @@ import { Subscription } from "rxjs";
   styleUrls: ['./reservation-list.component.scss'],
 })
 export class ReservationListComponent implements OnInit, OnDestroy {
-  reservations: ReservationResponse[];
+  reservationsList!: ReservationResponse[];
   private subscriptions: Subscription = new Subscription();
 
   constructor(private reservationService: ReservationService, private authService: AuthService) {
@@ -26,8 +26,8 @@ export class ReservationListComponent implements OnInit, OnDestroy {
   loadReservations() {
     this.subscriptions.add(
       this.reservationService.viewReservationsByUserId().subscribe(data => {
-        this.reservations = data.length > 0 ? data : [];
-        console.log(this.reservations);
+        this.reservationsList = data.length > 0 ? data : [];
+        console.log(this.reservationsList);
       })
     );
 
