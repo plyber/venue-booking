@@ -17,7 +17,9 @@ export class VenueService {
   }
 
   updateVenue(id: string, venue: Venue): Observable<Venue> {
-    return this.http.put<Venue>(`${this.apiUrl}/update-venue/${id}`, venue)
+    const venueCopy = { ...venue };
+    delete venueCopy._id;
+    return this.http.put<Venue>(`${this.apiUrl}/update-venue/${id}`, venueCopy);
   }
 
   deleteVenue(id: string): Observable<any> {
@@ -33,10 +35,11 @@ export class VenueService {
   }
 
   viewVenuesByUserId(): Observable<Venue[]> {
-    return this.http.get<any>(`${this.apiUrl}/view-owner-venues`,
+    return this.http.get<Venue[]>(`${this.apiUrl}/view-owner-venues`,
       this.getAuthHeaders()
     )
   }
+//TODO implement getVenueReservations
 
   private getAuthHeaders() {
     const token = localStorage.getItem('token');

@@ -28,6 +28,7 @@
       <p><strong>Country:</strong> {{ venue.country }}</p>
       <p><strong>Capacity:</strong> {{ venue.capacity }}</p>
       <p><strong>Type:</strong> {{ venue.type }}</p>
+      <p><strong>Owner:</strong>{{venue.ownerId}}</p>
       <p *ngIf="venue.amenities">
         <strong>Amenities:</strong> {{ venue.amenities.join(', ') }}
       </p>

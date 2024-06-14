@@ -37,6 +37,7 @@ export class AuthService {
           console.log('LOGIN TOKEN?:' + this.hasToken())
           localStorage.setItem('token', res.token);
           this.loggedIn.next(true);
+          this.userInfo = res.user;
         }
       })
     );
@@ -64,6 +65,7 @@ export class AuthService {
     localStorage.removeItem('token');
     console.log('LOGOUT TOKEN?:' + this.hasToken())
     this.loggedIn.next(false);
+    this.userInfo = null;
   }
 
   register(credentials: Credentials) {

@@ -28,7 +28,6 @@ export class ReservationListComponent implements OnInit, OnDestroy {
         console.log(this.reservationsList);
       })
     );
-
   }
 
   ngOnDestroy(): void {

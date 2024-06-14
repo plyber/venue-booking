@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Venue } from "../../../shared/models/venue.model";
 import { Subscription } from "rxjs";
 import { VenueService } from "../../../services/venue.service";
@@ -8,7 +8,8 @@ import { VenueService } from "../../../services/venue.service";
   templateUrl: './my-venues-list.component.html',
   styleUrls: ['./my-venues-list.component.scss']
 })
-export class MyVenuesListComponent implements OnInit {
+export class MyVenuesListComponent implements OnInit, OnDestroy {
+  editingVenues: Set<string> = new Set();
   venuesList!: Venue[];
 
   private subscriptions: Subscription = new Subscription();
@@ -26,8 +27,41 @@ export class MyVenuesListComponent implements OnInit {
     );
   }
 
+  //TODO implement reservations tied to each venue
+  deleteVenue(id) {
+    this.subscriptions.add(
+      this.venueService.deleteVenue(id).subscribe(data => {
+        console.log(data);
+        this.venuesList = this.venuesList.filter(venue => venue._id !== id);
+        console.log('VenueService deleted from frontend');
+      })
+    );
+  }
+  editVenue(id){
+    this.editingVenues.add(id);
+  }
+
+  saveVenue(venue: Venue) {
+    this.editingVenues.delete(venue._id);
+    this.subscriptions.add(
+      this.venueService.updateVenue(venue._id, venue).subscribe(data => {
+        console.log('Venue updated:', data);
+        venue.updatedAt = new Date();
+      })
+    );
+  }
+
+  cancelEdit(id: string) {
+    this.editingVenues.delete(id);
+    this.loadVenues();
+  }
+
   ngOnInit() {
     this.loadVenues();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
 }
