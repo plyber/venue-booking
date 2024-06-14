@@ -3,7 +3,7 @@
     <div class="col">
       <div *ngFor='let venue of venuesList' class='col col-md-8 col-xl-4 m-auto p-4 shadow card my-4'>
         <h4>Venue Name:
-          <a [routerLink]="['/venue', venue._id]" href=''>{{venue._id}} <i class='bi bi-box-arrow-up-right'></i></a>
+          <a [routerLink]="['/venue', venue._id]" href=''>{{venue.name}} <i class='bi bi-box-arrow-up-right'></i></a>
         </h4>
         <div class="d-flex flex-row justify-content-between">
           <h6 class="card-subtitle">Created: {{ venue.createdAt | date }}</h6>
@@ -11,36 +11,55 @@
         </div>
         <hr>
         <div>
-          <p class="card-text"><strong>Owner ID: </strong>
-            <span *ngIf="!editingVenues.has(venue._id)">{{venue.ownerId}}</span>
-            <input *ngIf="editingVenues.has(venue._id)" [(ngModel)]="venue.ownerId" class="form-control" />
+          <p class="card-text d-flex flex-row align-items-center"><strong>Owner ID: </strong>
+            <span>{{venue.ownerId}}</span>
           </p>
-          <p class="card-text"><strong>Type: </strong>
+          <p class="card-text d-flex flex-row align-items-center"><strong>Type: </strong>
             <span *ngIf="!editingVenues.has(venue._id)">{{venue.type}}</span>
-            <input *ngIf="editingVenues.has(venue._id)" [(ngModel)]="venue.type" class="form-control" />
+            <input *ngIf="editingVenues.has(venue._id)" [(ngModel)]="venue.type" class="form-control ms-4"/>
           </p>
-          <p class="card-text"><strong>Address: </strong>
+          <p class="card-text d-flex flex-row align-items-center"><strong>Address: </strong>
             <span *ngIf="!editingVenues.has(venue._id)">{{venue.address}}</span>
-            <input *ngIf="editingVenues.has(venue._id)" [(ngModel)]="venue.address" class="form-control" />
+            <input *ngIf="editingVenues.has(venue._id)" [(ngModel)]="venue.address" class="form-control ms-4"/>
           </p>
-          <p class="card-text"><strong>Capacity: </strong>
+          <p class="card-text d-flex flex-row align-items-center"><strong>City: </strong>
+            <span *ngIf="!editingVenues.has(venue._id)">{{venue.city}}</span>
+            <input *ngIf="editingVenues.has(venue._id)" [(ngModel)]="venue.city" class="form-control ms-4"/>
+          </p>
+          <p class="card-text d-flex flex-row align-items-center"><strong>State: </strong>
+            <span *ngIf="!editingVenues.has(venue._id)">{{venue.state}}</span>
+            <input *ngIf="editingVenues.has(venue._id)" [(ngModel)]="venue.state" class="form-control ms-4"/>
+          </p>
+          <p class="card-text d-flex flex-row align-items-center"><strong>Country: </strong>
+            <span *ngIf="!editingVenues.has(venue._id)">{{venue.country}}</span>
+            <input *ngIf="editingVenues.has(venue._id)" [(ngModel)]="venue.country" class="form-control ms-4"/>
+          </p>
+          <p class="card-text d-flex flex-row align-items-center"><strong>Zip Code: </strong>
+            <span *ngIf="!editingVenues.has(venue._id)">{{venue.zip}}</span>
+            <input *ngIf="editingVenues.has(venue._id)" [(ngModel)]="venue.zip" class="form-control ms-4"/>
+          </p>
+          <p class="card-text d-flex flex-row align-items-center"><strong>Capacity: </strong>
             <span *ngIf="!editingVenues.has(venue._id)">{{venue.capacity}}</span>
-            <input *ngIf="editingVenues.has(venue._id)" [(ngModel)]="venue.capacity" class="form-control" />
+            <input *ngIf="editingVenues.has(venue._id)" [(ngModel)]="venue.capacity" class="form-control ms-4"/>
           </p>
-          <p *ngIf="venue.amenities" class="card-text"><strong>Amenities: </strong>
+          <p *ngIf="venue.amenities" class="card-text d-flex flex-row align-items-center"><strong>Amenities: </strong>
             <span *ngIf="!editingVenues.has(venue._id)">{{venue.amenities}}</span>
-            <input *ngIf="editingVenues.has(venue._id)" [(ngModel)]="venue.amenities" class="form-control" />
+            <input *ngIf="editingVenues.has(venue._id)" [(ngModel)]="venue.amenities" class="form-control ms-4"/>
           </p>
         </div>
         <div class="d-flex flex-row justify-content-between mt-3">
-          <app-button *ngIf="!editingVenues.has(venue._id)" (click)="editVenue(venue._id)" [icon]="'bi bi-pencil'" [style]="'btn-primary px-5'"
+          <app-button (click)="editVenue(venue._id)" *ngIf="!editingVenues.has(venue._id)" [icon]="'bi bi-pencil'"
+                      [style]="'btn-primary px-5'"
                       [text]="'Edit'" [type]="'button'"></app-button>
-          <app-button *ngIf="editingVenues.has(venue._id)" (click)="saveVenue(venue)" [icon]="'bi bi-save'" [style]="'btn-success px-5'"
+          <app-button (click)="saveVenue(venue)" *ngIf="editingVenues.has(venue._id)" [icon]="'bi bi-save'"
+                      [style]="'btn-success px-5'"
                       [text]="'Save'" [type]="'button'"></app-button>
-          <app-button *ngIf="editingVenues.has(venue._id)" (click)="cancelEdit(venue._id)" [icon]="'bi bi-x'" [style]="'btn-danger px-5'"
-                      [text]="'Cancel'" [type]="'button'"></app-button>
-          <app-button (click)="deleteVenue(venue._id)" [icon]="'bi bi-trash'" [style]="'btn-danger px-5'"
+          <app-button (click)="deleteVenue(venue._id)" *ngIf="editingVenues.has(venue._id)" [icon]="'bi bi-trash'"
+                      [style]="'btn-danger px-5'"
                       [text]="'Delete'" [type]="'button'"></app-button>
+          <app-button (click)="cancelEdit(venue._id)" *ngIf="editingVenues.has(venue._id)" [icon]="'bi bi-x'"
+                      [style]="'btn-warning px-5'"
+                      [text]="'Cancel'" [type]="'button'"></app-button>
         </div>
       </div>
     </div>

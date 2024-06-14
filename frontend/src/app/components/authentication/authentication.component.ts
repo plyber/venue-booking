@@ -31,7 +31,8 @@ export class AuthenticationComponent implements OnInit {
               this.responseMessage = message.message
               this.authService.getUserInfo().subscribe(() => {
                 setTimeout(() => {
-                  this.router.navigate(['/venues']);
+                  this.router.navigate(['/venues']).then(()=>
+                  window.location.reload());
                 }, 1000);
               });
             },
@@ -46,11 +47,9 @@ export class AuthenticationComponent implements OnInit {
           this.authService.register(this.credentials).subscribe({
             next: (message) => {
               this.responseMessage = message.message
-              this.authService.getUserInfo().subscribe(() => {
-                setTimeout(() => {
-                  this.router.navigate(['/venues']);
-                }, 1000);
-              });
+              setTimeout(() => {
+                this.router.navigate(['/venues']);
+              }, 1000);
             },
             error: (error) => {
               this.responseMessage = error.message || 'Registration failed';

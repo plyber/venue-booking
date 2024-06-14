@@ -10,7 +10,6 @@ import { Venue } from '../../../shared/models/venue.model';
 })
 export class VenueInfoComponent {
   venue!: Venue;
-
   constructor(
     private route: ActivatedRoute,
     private dataService: VenueService
