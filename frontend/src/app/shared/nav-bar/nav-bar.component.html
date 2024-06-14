@@ -6,13 +6,13 @@
         Venue Booking
       </a>
     </li>
-    <li *ngIf="user && user.type==='customer'">
+    <li *ngIf="isLoggedIn && user?.type==='customer'">
       <a class='link-item d-flex flex-row align-items-center my-auto p-2 mx-2 fw-bolder' [routerLink]="['/reservation-list']">
         <i class="bi bi-bookmark-check-fill px-1"></i>
         My Bookings
       </a>
     </li>
-    <li *ngIf="user && user.type==='venue'">
+    <li *ngIf="isLoggedIn && user?.type==='venue'">
       <a class='link-item d-flex flex-row align-items-center my-auto p-2 mx-2 fw-bolder' [routerLink]="['/my-venues']">
         <i class="bi bi-star-fill px-1"></i>
         My Venues
@@ -23,7 +23,7 @@
     <ng-container *ngIf='isLoggedIn; then loggedIn; else loggedOut'></ng-container>
     <ng-template #loggedIn>
       <div class="d-flex flex-row align-items-center text-center">
-        <p *ngIf="user" class="mb-0 text-capitalize"><strong>{{user.name}}</strong> | {{user.type}}</p>
+        <p *ngIf="user" class="mb-0 text-capitalize"><strong>{{user?.name}}</strong> | {{user?.type}}</p>
         <button [routerLink]="['/dashboard']" class='btn btn-primary ms-4'>My Account</button>
         <button (click)='logOut()' class='btn btn-primary ms-2'>Log Out</button>
       </div>

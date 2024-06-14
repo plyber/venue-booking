@@ -9,7 +9,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./authentication.component.scss'],
 })
 export class AuthenticationComponent implements OnInit {
-  credentials: Credentials = { username: '', password: '', accountType: null };
+  credentials: Credentials = {username: '', password: '', accountType: null};
   responseMessage = '';
   protected mode: 'register' | 'login';
 
@@ -29,9 +29,11 @@ export class AuthenticationComponent implements OnInit {
           this.authService.login(this.credentials).subscribe({
             next: (message) => {
               this.responseMessage = message.message
-              setTimeout(() => {
-                this.router.navigate(['/venues']);
-              }, 1000);
+              this.authService.getUserInfo().subscribe(() => {
+                setTimeout(() => {
+                  this.router.navigate(['/venues']);
+                }, 1000);
+              });
             },
             error: (error) => {
               this.responseMessage = error.message
@@ -44,9 +46,11 @@ export class AuthenticationComponent implements OnInit {
           this.authService.register(this.credentials).subscribe({
             next: (message) => {
               this.responseMessage = message.message
-              setTimeout(() => {
-                this.router.navigate(['/venues']);
-              }, 1000);
+              this.authService.getUserInfo().subscribe(() => {
+                setTimeout(() => {
+                  this.router.navigate(['/venues']);
+                }, 1000);
+              });
             },
             error: (error) => {
               this.responseMessage = error.message || 'Registration failed';

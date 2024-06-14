@@ -1,4 +1,4 @@
-<ng-container *ngIf='reservationsList.length>0; else noData'>
+<ng-container *ngIf='reservationsList && reservationsList?.length>0; else noData'>
   <div class="row">
     <div class="col">
       <div *ngFor='let reservation of reservationsList; let i = index'
