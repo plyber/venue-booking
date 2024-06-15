@@ -1,6 +1,6 @@
-<div *ngIf="venue; else noVenue" class="m-auto" style="max-width: 64rem">
+<div *ngIf="venue; else noVenue" class="m-auto mt-4" style="width: 64rem">
   <div
-    class="photo-carrousel"
+    class="photo-carrousel rounded-3"
     style="
       overflow: hidden;
       width: 100%;
@@ -9,12 +9,12 @@
       justify-content: center;
       align-items: center;
       position: relative;
-      max-height: 50rem;
+      height: 30rem;
     ">
     <img
       alt="VenueService Image"
       class="venue-image"
-      src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/60/5e/15/restaurant.jpg?w=1200&h=-1&s=1" />
+      [src]="venue.images[current]" />
   </div>
   <div class="d-flex flex-row my-5" style="">
     <div style="margin-right: 2rem; width: 60%">

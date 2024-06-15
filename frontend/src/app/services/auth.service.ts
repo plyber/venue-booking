@@ -36,7 +36,6 @@ export class AuthService {
         if (res.token) {
           console.log('LOGIN TOKEN?:' + this.hasToken())
           localStorage.setItem('token', res.token);
-          this.loggedIn.next(true);
           this.userInfo = res.user;
         }
       })
@@ -58,7 +57,7 @@ export class AuthService {
   }
 
   saveUser(user: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/save-user`, user);
+    return this.http.post(`${this.apiUrl}/save-user`, user)
   }
 
   logout() {

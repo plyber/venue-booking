@@ -1,12 +1,14 @@
 <div
   class="card m-auto my-4 d-flex flex-row justify-content-center venue-card overflow-hidden">
   <div *ngIf="venueCard.images" class="image-container">
-    <img
-      [src]="venueCard.images[0]"
-      alt="VenueService Image"
-      class="venue-image"/>
+    <div>
+        <img
+          [src]="venueCard.images[current]"
+          alt="Venue Image"
+          class="venue-image"/>
+    </div>
   </div>
-  <div class="p-4 d-flex flex-column justify-content-end">
+  <div class="p-4 d-flex flex-column justify-content-end venue-details">
     <h5 class="card-title">
       <strong>{{ venueCard.name }}</strong>
     </h5>

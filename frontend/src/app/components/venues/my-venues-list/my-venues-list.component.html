@@ -1,7 +1,17 @@
-<ng-container *ngIf='venuesList && venuesList.length > 0; else noData'>
+<div>
   <div class="row">
-    <div class="col">
-      <div *ngFor='let venue of venuesList' class='col col-md-8 col-xl-4 m-auto p-4 shadow card my-4'>
+    <div>
+      <div class="row">
+        <div class="col col-xl-5 col-lg-8 col-md-12 col-sm-12 col-xs-12 m-auto p-4 shadow card mt-4">
+          <h2>Register a venue!</h2>
+          <p>Register a venue and it will appear in this section.</p>
+          <app-button [icon]="'bi bi-plus-square'" [routerLink]="['/create-venue']" [style]="'btn-outline-success'"
+                      [text]="'Register Venue'" class="align-self-center"></app-button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf='venuesList && venuesList.length > 0' class="col">
+      <div *ngFor='let venue of venuesList' class='col col-xl-5 col-lg-8 col-md-12 col-sm-12 col-xs-12 m-auto p-4 shadow card mt-4'>
         <h4>Venue Name:
           <a [routerLink]="['/venue', venue._id]" href=''>{{venue.name}} <i class='bi bi-box-arrow-up-right'></i></a>
         </h4>
@@ -64,15 +74,6 @@
       </div>
     </div>
   </div>
-</ng-container>
+</div>
 
-<ng-template #noData>
-  <div class="row" style="margin-top:12rem">
-    <div class="col col-md-5 col-lg-5 align-self-center m-auto shadow card p-4">
-      <h2>Register a venue!</h2>
-      <p>Register a venue and it will appear in this section.</p>
-      <app-button [icon]="'bi bi-plus-square'" [routerLink]="['/register-venue']" [style]="'btn-outline-success'"
-                  [text]="'Register'" class="align-self-center"></app-button>
-    </div>
-  </div>
-</ng-template>
+

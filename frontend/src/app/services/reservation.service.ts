@@ -21,11 +21,13 @@ export class ReservationService {
   }
 
   updateReservation(id: string, reservation: any): Observable<ReservationResponse> {
-    return this.http.put<ReservationResponse>(`${this.apiUrl}/update-reservation/${id}`, reservation)
+    const reservationCopy = {...reservation}
+    delete reservationCopy._id
+    return this.http.put<ReservationResponse>(`${this.apiUrl}/update-reservation/${id}`, reservationCopy, this.getAuthHeaders())
   }
 
   deleteReservation(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/delete-reservation/${id}`)
+    return this.http.delete(`${this.apiUrl}/delete-reservation/${id}`, this.getAuthHeaders())
   }
 
   viewReservationsByUserId(): Observable<ReservationResponse[]> {

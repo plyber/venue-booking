@@ -11,6 +11,7 @@ import { User } from "../../../shared/models/user";
 })
 export class ReservationListComponent implements OnInit, OnDestroy {
   reservationsList!: ReservationResponse[];
+  editingReservations: Set<string> = new Set();
   private subscriptions: Subscription = new Subscription();
   protected user?:User;
 
@@ -28,6 +29,34 @@ export class ReservationListComponent implements OnInit, OnDestroy {
         console.log(this.reservationsList);
       })
     );
+  }
+  editReservation(id: string) {
+    this.editingReservations.add(id);
+  }
+
+  saveReservation(reservation: ReservationResponse) {
+    this.editingReservations.delete(reservation._id);
+    this.subscriptions.add(
+      this.reservationService.updateReservation(reservation._id, reservation).subscribe(data => {
+        console.log('Reservation updated:', data);
+        reservation.updatedAt = new Date().toString();
+      })
+    );
+  }
+
+  deleteReservation(id: string) {
+    this.subscriptions.add(
+      this.reservationService.deleteReservation(id).subscribe(data => {
+        console.log(data);
+        this.reservationsList = this.reservationsList.filter(reservation => reservation._id !== id);
+        console.log('Reservation deleted from frontend');
+      })
+    );
+  }
+
+  cancelEdit(id: string) {
+    this.editingReservations.delete(id);
+    this.loadReservations();
   }
 
   ngOnDestroy(): void {

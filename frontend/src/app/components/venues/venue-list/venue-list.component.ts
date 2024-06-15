@@ -29,7 +29,9 @@ export class VenueListComponent implements OnDestroy {
       capacity: Math.floor(Math.random()*200),
       type: 'Restaurant',
       amenities: ['Pool', 'Jazz Band', 'Smoking area'],
-      images: ['https://dynamic-media-cdn.tripadvisor.com/media/photo-o/18/60/5e/15/restaurant.jpg?w=1200&h=-1&s=1'],
+      images: ['https://cdn.cluj.com/ghidlocalcom/sites/2/2017/07/crinul-alb-7-800x600.jpg',
+      'https://scontent.ftsr1-1.fna.fbcdn.net/v/t39.30808-6/306396430_5222565141174085_7806083091093507299_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=Czz5iiyMhDEQ7kNvgGqNgiE&_nc_ht=scontent.ftsr1-1.fna&oh=00_AYDxwDFvIs9UCFnE4IIuHxKeK0Q20aL8jAC3JQXrIHg9vA&oe=66735E56',
+      'https://crinulalboradea.ro/wp-content/themes/backbone/assets/images/section-gallery/Crinul-Alb---0007.jpg'],
       createdAt: new Date(),
       updatedAt: new Date(),
     };

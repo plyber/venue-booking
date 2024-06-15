@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module'; // Ensure this is imported
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VenueListComponent } from './components/venues/venue-list/venue-list.component';
 import { VenueCardComponent } from './components/venues/venue-card/venue-card.component';
 import { VenueInfoComponent } from './components/venues/venue-info/venue-info.component';
@@ -33,7 +33,7 @@ import { VenueFormComponent } from './components/venues/venue-form/venue-form.co
     MyVenuesListComponent,
     VenueFormComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+    imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

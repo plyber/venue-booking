@@ -4,6 +4,7 @@ export interface ReservationRequest {
   customerName: string;
   customerEmail: string;
   customerPhone: string;
+  createdAt: string;
   venueId: string;
   venueName: string;
   reservationDate?: Date;

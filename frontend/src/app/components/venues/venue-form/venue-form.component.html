@@ -1,1 +1,89 @@
-<p>venue-form works!</p>
+<div class="container mt-5">
+  <h2>Create Venue</h2>
+  <form (ngSubmit)="onSubmit()" [formGroup]="venueForm">
+    <div class="mb-3">
+      <label class="form-label" for="ownerId">Owner ID</label>
+      <input class="form-control" [disabled] formControlName="ownerId" id="ownerId" type="text">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="name">Name</label>
+      <input [ngClass]="{'is-invalid': venueForm.get('name').invalid && venueForm.get('name').touched}" class="form-control" formControlName="name" id="name"
+             type="text">
+      <div class="invalid-feedback">
+        Name is required and must be at least 3 characters.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="address">Address</label>
+      <input [ngClass]="{'is-invalid': venueForm.get('address').invalid && venueForm.get('address').touched}" class="form-control" formControlName="address" id="address"
+             type="text">
+      <div class="invalid-feedback">
+        Address is required.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="city">City</label>
+      <input [ngClass]="{'is-invalid': venueForm.get('city').invalid && venueForm.get('city').touched}" class="form-control" formControlName="city" id="city"
+             type="text">
+      <div class="invalid-feedback">
+        City is required.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="state">State</label>
+      <input class="form-control" formControlName="state" id="state" type="text">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="zip">ZIP Code</label>
+      <input [ngClass]="{'is-invalid': venueForm.get('zip').invalid && venueForm.get('zip').touched}" class="form-control" formControlName="zip" id="zip"
+             type="text">
+      <div class="invalid-feedback">
+        ZIP Code is required and must be a 5-digit number.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="country">Country</label>
+      <input [ngClass]="{'is-invalid': venueForm.get('country').invalid && venueForm.get('country').touched}" class="form-control" formControlName="country" id="country"
+             type="text">
+      <div class="invalid-feedback">
+        Country is required.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="capacity">Capacity</label>
+      <input [ngClass]="{'is-invalid': venueForm.get('capacity').invalid && venueForm.get('capacity').touched}" class="form-control" formControlName="capacity" id="capacity"
+             type="number">
+      <div class="invalid-feedback">
+        Capacity is required and must be at least 1.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="type">Type</label>
+      <input [ngClass]="{'is-invalid': venueForm.get('type').invalid && venueForm.get('type').touched}" class="form-control" formControlName="type" id="type"
+             type="text">
+      <div class="invalid-feedback">
+        Type is required.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="amenities">Amenities (comma separated)</label>
+      <input class="form-control" formControlName="amenities" id="amenities" type="text">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="images">Images (comma separated URLs)</label>
+      <input class="form-control" formControlName="images" id="images" type="text">
+    </div>
+
+    <button class="btn btn-primary" type="submit">Create Venue</button>
+  </form>
+</div>

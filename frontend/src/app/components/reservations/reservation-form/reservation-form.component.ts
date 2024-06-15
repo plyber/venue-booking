@@ -21,6 +21,7 @@ export class ReservationFormComponent implements OnDestroy {
     venueName: '',
     reservationDate: null,
     reservationTime: null,
+    createdAt: new Date().toString(),
     customerId: '',
     customerName: '',
     customerEmail: '',
@@ -61,6 +62,7 @@ export class ReservationFormComponent implements OnDestroy {
     const reservationData: ReservationResponse = {
       venueId: this.currentVenue._id,
       venueName: this.currentVenue.name,
+      createdAt: new Date().toString(),
       reservationDateTime: new Date(
         `${this.reservation.reservationDate}T${this.reservation.reservationTime}`
       ).toString(),
