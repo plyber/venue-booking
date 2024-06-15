@@ -47,14 +47,13 @@ def create_reservation():
 def update_reservation(reservation_id):
     data = request.json
     mongo.db.reservations.update_one({'_id': ObjectId(reservation_id)}, {'$set': data})
-    return jsonify({'msg': 'Reservation updated'}), 200
+    return jsonify({'message': 'Reservation updated'}), 200
 
 
 @reservations.route('/delete-reservation/<reservation_id>', methods=['DELETE'])
 def delete_reservation(reservation_id):
     mongo.db.reservations.delete_one({'_id': ObjectId(reservation_id)})
-    return jsonify({'msg': 'Reservation deleted'}), 200
-
+    return jsonify({'message': 'Reservation deleted'}), 200
 
 @reservations.route('/view-reservations', methods=['GET'])
 @token_required
@@ -67,7 +66,21 @@ def view_reservations(current_user):
         reservation['_id'] = str(reservation['_id'])
     return jsonify(reservations), 200
 
-
+@reservations.route('/reservations/by-owner', methods=['GET'])
+@token_required
+def get_reservations_by_owner(current_user):
+    user_id = str(current_user['_id'])
+    venues = list(mongo.db.venues.find({"ownerId": user_id}))
+    if not venues:
+        return jsonify({"message": "No venues found for this owner"}), 404
+    venue_ids = [str(venue["_id"]) for venue in venues]
+    reservations = list(mongo.db.reservations.find({"venueId": {"$in": venue_ids}}))
+    if not reservations:
+        return jsonify({"message": "No reservations found for the owner's venues"}), 404
+    for reservation in reservations:
+        reservation["_id"] = str(reservation["_id"])
+        reservation["venueId"] = str(reservation["venueId"])
+    return jsonify(reservations), 200
 
 @venues.route('/create-venue', methods=['POST'])
 def create_venue():
@@ -80,13 +93,13 @@ def create_venue():
 def update_venue(venue_id):
     data = request.json
     mongo.db.venues.update_one({'_id': ObjectId(venue_id)}, {'$set': data})
-    return jsonify({'msg': 'VenueService updated'}), 200
+    return jsonify({'message': 'VenueService updated'}), 200
 
 
 @venues.route('/delete-venue/<venue_id>', methods=['DELETE'])
 def delete_venue(venue_id):
     mongo.db.venues.delete_one({'_id': ObjectId(venue_id)})
-    return jsonify({'msg': 'VenueService deleted'}), 200
+    return jsonify({'message': 'VenueService deleted'}), 200
 
 
 @venues.route('/view-venues', methods=['GET'])

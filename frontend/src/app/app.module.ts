@@ -16,6 +16,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ButtonComponent } from './shared/button/button.component';
 import { MyVenuesListComponent } from './components/venues/my-venues-list/my-venues-list.component';
 import { VenueFormComponent } from './components/venues/venue-form/venue-form.component';
+import { VenueReservationListComponent } from './components/reservations/venue-reservation-list/venue-reservation-list.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { VenueFormComponent } from './components/venues/venue-form/venue-form.co
     ButtonComponent,
     MyVenuesListComponent,
     VenueFormComponent,
+    VenueReservationListComponent,
   ],
     imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule],
   providers: [],

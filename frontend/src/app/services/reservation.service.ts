@@ -38,6 +38,10 @@ export class ReservationService {
     )
   }
 
+  getReservationsByOwner(): Observable<ReservationResponse[]> {
+    return this.http.get<ReservationResponse[]>(`${this.apiUrl}/reservations/by-owner`,this.getAuthHeaders());
+  }
+
   private getAuthHeaders() {
     const token = localStorage.getItem('token');
     console.log('Auth Token:', token);  // Debug statement

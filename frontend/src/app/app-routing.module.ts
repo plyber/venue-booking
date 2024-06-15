@@ -10,22 +10,26 @@ import { MyVenuesListComponent } from "./components/venues/my-venues-list/my-ven
 import { customerGuard } from "./shared/guards/customer.guard";
 import { venueGuard } from "./shared/guards/venue.guard";
 import { VenueFormComponent } from "./components/venues/venue-form/venue-form.component";
+import {
+    VenueReservationListComponent
+} from "./components/reservations/venue-reservation-list/venue-reservation-list.component";
 
 const routes: Routes = [
-  { path: 'venues', component: VenueListComponent },
-  { path: '', redirectTo: '/venues', pathMatch: 'full' },
-  { path: 'venue/:id', component: VenueInfoComponent },
-  { path: 'register', component: AuthenticationComponent, data: { mode: 'register' } },
-  { path: 'log-in', component: AuthenticationComponent, data: { mode: 'login' } },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
-  { path: 'reservation-list', component: ReservationListComponent, canActivate:[customerGuard]},
-  { path: 'my-venues', component: MyVenuesListComponent, canActivate:[venueGuard]},
-  { path: 'create-venue', component: VenueFormComponent, canActivate:[venueGuard]}
+    {path: 'venues', component: VenueListComponent},
+    {path: '', redirectTo: '/venues', pathMatch: 'full'},
+    {path: 'venue/:id', component: VenueInfoComponent},
+    {path: 'register', component: AuthenticationComponent, data: {mode: 'register'}},
+    {path: 'log-in', component: AuthenticationComponent, data: {mode: 'login'}},
+    {path: 'dashboard', component: DashboardComponent, canActivate: [authGuard]},
+    {path: 'reservation-list', component: ReservationListComponent, canActivate: [customerGuard]},
+    {path: 'my-venues', component: MyVenuesListComponent, canActivate: [venueGuard]},
+    {path: 'create-venue', component: VenueFormComponent, canActivate: [venueGuard]},
+    {path: 'venue-reservations', component: VenueReservationListComponent, canActivate: [venueGuard]},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule],
 })
 export class AppRoutingModule {
 }

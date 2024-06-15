@@ -1,0 +1,48 @@
+<div *ngIf='reservationsList && reservationsList?.length > 0;'>
+  <div class="d-flex flex-wrap align-content-center justify-content-center">
+      <div *ngFor='let reservation of reservationsList' class='mt-4 mx-2 p-4 shadow card my-4'>
+        <h4>Venue Name:
+          <a [routerLink]="['/venue', reservation.venueId]" href=''>{{reservation.venueName}}
+            <i class='bi bi-box-arrow-up-right'></i>
+          </a>
+        </h4>
+        <div class="d-flex flex-row justify-content-between mt-2">
+          <h6 class="card-subtitle">Created: {{ reservation.createdAt | date : "medium"}}</h6>
+          <h6 class="card-subtitle">Updated: {{ reservation.updatedAt | date : "medium"}}</h6>
+        </div>
+        <hr>
+        <div>
+          <p><strong>Name: </strong>
+            <span>{{reservation.customerName}}</span>
+          </p>
+          <p><strong>Email: </strong>
+            <span>{{reservation.customerEmail}}</span>
+          </p>
+          <p><strong>Phone: </strong>
+            <span>{{reservation.customerPhone}}</span>
+          </p>
+          <p><strong>Date: </strong>
+            <span>{{reservation.reservationDateTime | date : 'short'}}</span>
+          </p>
+          <p><strong>Number of Guests: </strong>
+            <span>{{reservation.numGuests}}</span>
+          </p>
+          <p><strong>Special Requests: </strong>
+            <span>{{reservation.specialRequests}}</span>
+          </p>
+          <p class="text-capitalize"><strong>Status: </strong>
+            <span>{{reservation.status}}</span>
+          </p>
+        </div>
+        <hr>
+        <div class="d-flex flex-row justify-content-between mt-3">
+          <app-button (click)="confirmReservation(reservation._id)" [icon]="'bi bi-check-square'" [style]="'btn-success px-4'"
+                      [text]="'Confirm'" [type]="'button'"></app-button>
+          <app-button (click)="pendingReservation(reservation._id)" [icon]="'bi bi-hourglass'" [style]="'btn-warning px-4'"
+                      [text]="'Pending'" [type]="'button'"></app-button>
+          <app-button (click)="cancelReservation(reservation._id)" [icon]="'bi bi-x-square'" [style]="'btn-danger px-4'"
+                      [text]="'Cancel'" [type]="'button'"></app-button>
+        </div>
+      </div>
+  </div>
+</div>
