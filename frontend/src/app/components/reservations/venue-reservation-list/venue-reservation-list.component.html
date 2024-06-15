@@ -2,7 +2,7 @@
   <div class="d-flex flex-wrap align-content-center justify-content-center">
       <div *ngFor='let reservation of reservationsList' class='mt-4 mx-2 p-4 shadow card my-4'>
         <h4>Venue Name:
-          <a [routerLink]="['/venue', reservation.venueId]" href=''>{{reservation.venueName}}
+          <a [routerLink]="['/venue', reservation.venueId]" href='' class="text-decoration-none">{{reservation.venueName}}
             <i class='bi bi-box-arrow-up-right'></i>
           </a>
         </h4>
@@ -36,11 +36,11 @@
         </div>
         <hr>
         <div class="d-flex flex-row justify-content-between mt-3">
-          <app-button (click)="confirmReservation(reservation._id)" [icon]="'bi bi-check-square'" [style]="'btn-success px-4'"
+          <app-button (click)="confirmReservation(reservation._id)" [icon]="'bi bi-check-square'" [style]="'btn-success'"
                       [text]="'Confirm'" [type]="'button'"></app-button>
-          <app-button (click)="pendingReservation(reservation._id)" [icon]="'bi bi-hourglass'" [style]="'btn-warning px-4'"
+          <app-button (click)="pendingReservation(reservation._id)" [icon]="'bi bi-hourglass'" [style]="'btn-warning'"
                       [text]="'Pending'" [type]="'button'"></app-button>
-          <app-button (click)="cancelReservation(reservation._id)" [icon]="'bi bi-x-square'" [style]="'btn-danger px-4'"
+          <app-button (click)="cancelReservation(reservation._id)" [icon]="'bi bi-x-square'" [style]="'btn-danger'"
                       [text]="'Cancel'" [type]="'button'"></app-button>
         </div>
       </div>
