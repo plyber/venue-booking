@@ -42,6 +42,7 @@ export class VenueFormComponent implements OnInit {
             const newVenue: Venue = {
                 ...this.venueForm.value,
                 ownerId:this.userId,
+                createdAt: new Date(),
                 amenities: formValues.amenities ? formValues.amenities.split(',').map(item => item.trim()) : [],
                 images: formValues.images ? formValues.images.split(',').map(item => item.trim()) : []
             }

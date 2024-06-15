@@ -37,7 +37,7 @@ export class MyVenuesListComponent implements OnInit, OnDestroy {
       })
     );
   }
-  editVenue(id){
+  editVenue(id:string){
     this.editingVenues.add(id);
   }
 

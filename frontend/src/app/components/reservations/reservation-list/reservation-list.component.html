@@ -8,8 +8,8 @@
           </a>
         </h4>
         <div class="d-flex flex-row justify-content-between mt-2">
-          <h6 class="card-subtitle">Created: {{ reservation.createdAt | date }}</h6>
-          <h6 class="card-subtitle">Updated: {{ reservation.updatedAt | date }}</h6>
+          <h6 class="card-subtitle">Created: {{ reservation.createdAt | date : "medium"}}</h6>
+          <h6 class="card-subtitle">Updated: {{ reservation.updatedAt | date : "medium"}}</h6>
         </div>
         <hr>
         <div>

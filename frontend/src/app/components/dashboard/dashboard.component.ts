@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../shared/models/user';
 import { Subscription } from "rxjs";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +15,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   protected user?: User;
   private sub: Subscription = new Subscription();
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
     this.sub.add(this.authService.getUserInfo().subscribe(response => {
       this.user = response.user;
     }));
@@ -45,6 +46,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.responseMessage = null;
       }, 1000)
+      this.router.navigate(['/dashboard']).then(()=>{
+        window.location.reload()
+      })
     });
   }
 
