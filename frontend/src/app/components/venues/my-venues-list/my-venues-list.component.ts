@@ -32,7 +32,7 @@ export class MyVenuesListComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.venueService.deleteVenue(id).subscribe(data => {
         console.log(data);
-        this.venuesList = this.venuesList.filter(venue => venue._id !== id);
+        this.venuesList = this.venuesList.filter(venue => venue.venueId !== id);
         console.log('VenueService deleted from frontend');
       })
     );
@@ -42,9 +42,9 @@ export class MyVenuesListComponent implements OnInit, OnDestroy {
   }
 
   saveVenue(venue: Venue) {
-    this.editingVenues.delete(venue._id);
+    this.editingVenues.delete(venue.venueId);
     this.subscriptions.add(
-      this.venueService.updateVenue(venue._id, venue).subscribe(data => {
+      this.venueService.updateVenue(venue.venueId, venue).subscribe(data => {
         console.log('Venue updated:', data);
         venue.updatedAt = new Date();
       })

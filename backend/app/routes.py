@@ -46,6 +46,7 @@ def create_reservation():
 @reservations.route('/update-reservation/<reservation_id>', methods=['PUT'])
 def update_reservation(reservation_id):
     data = request.json
+    data.pop('_id', None)
     mongo.db.reservations.update_one({'_id': ObjectId(reservation_id)}, {'$set': data})
     return jsonify({'message': 'Reservation updated'}), 200
 

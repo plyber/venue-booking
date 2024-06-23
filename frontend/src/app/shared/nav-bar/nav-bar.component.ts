@@ -5,40 +5,47 @@ import { Subscription } from 'rxjs';
 import { User } from "../models/user";
 
 @Component({
-  selector: 'app-nav-bar',
-  templateUrl: './nav-bar.component.html',
-  styleUrls: ['./nav-bar.component.scss'],
+    selector: 'app-nav-bar',
+    templateUrl: './nav-bar.component.html',
+    styleUrls: ['./nav-bar.component.scss'],
 })
 export class NavBarComponent implements OnInit, OnDestroy {
-  isLoggedIn: boolean;
-  protected user?: User;
-  private sub:Subscription = new Subscription();
+    isLoggedIn: boolean = false;
+    user?: User;
+    private sub: Subscription = new Subscription();
 
 
-  constructor(private authService: AuthService, private router:Router) {
+    constructor(private authService: AuthService, private router: Router) {
 
-  }
-
-  ngOnInit() {
-    this.sub.add(this.authService.isLoggedIn.subscribe(response => {
-      this.isLoggedIn = response;
-    }));
-    this.sub.add(this.authService.getUserInfo().subscribe(response => {
-      this.user = response.user;
-    }));
-  }
+    }
 
 
-  logOut(){
-    this.authService.logout()
-    this.router.navigate(['/venues'])
-  }
 
-  logIn(){
-    this.router.navigate(['/log-in'])
-  }
+    ngOnInit() {
+        this.sub.add(this.authService.isLoggedIn.subscribe(response => {
+            this.isLoggedIn = response;
+            console.log(this.isLoggedIn)
+            if (response) {
+                this.sub.add(this.authService.getUserInfo().subscribe(user => {
+                    this.user = user;
+                }));
+            } else {
+                this.user = null;
+            }
+        }));
+    }
 
-  ngOnDestroy(): void {
-    this.sub.unsubscribe()
-  }
+
+    logOut() {
+        this.authService.logout()
+        this.router.navigate(['/venues'])
+    }
+
+    logIn() {
+        this.router.navigate(['/log-in'])
+    }
+
+    ngOnDestroy(): void {
+        this.sub.unsubscribe()
+    }
 }

@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ReservationResponse } from '../../../shared/models/ReservationResponse.model';
 import { ReservationService } from "../../../services/reservation.service";
 import { Subscription } from "rxjs";
-import { User } from "../../../shared/models/user";
 
 @Component({
   selector: 'app-reservation-info',
@@ -13,7 +12,6 @@ export class ReservationListComponent implements OnInit, OnDestroy {
   reservationsList!: ReservationResponse[];
   editingReservations: Set<string> = new Set();
   private subscriptions: Subscription = new Subscription();
-  protected user?:User;
 
   constructor(private reservationService: ReservationService) {
   }
@@ -24,7 +22,7 @@ export class ReservationListComponent implements OnInit, OnDestroy {
 
   loadReservations() {
     this.subscriptions.add(
-      this.reservationService.viewReservationsByUserId().subscribe(data => {
+      this.reservationService.getReservationsByUserId().subscribe(data => {
         this.reservationsList = data.length > 0 ? data : [];
         console.log(this.reservationsList);
       })
@@ -35,11 +33,11 @@ export class ReservationListComponent implements OnInit, OnDestroy {
   }
 
   saveReservation(reservation: ReservationResponse) {
-    this.editingReservations.delete(reservation._id);
+    this.editingReservations.delete(reservation.reservationId);
+    reservation.updatedAt = new Date().toString();
     this.subscriptions.add(
-      this.reservationService.updateReservation(reservation._id, reservation).subscribe(data => {
+      this.reservationService.updateReservation(reservation.reservationId, reservation).subscribe(data => {
         console.log('Reservation updated:', data);
-        reservation.updatedAt = new Date().toString();
       })
     );
   }
@@ -48,7 +46,7 @@ export class ReservationListComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.reservationService.deleteReservation(id).subscribe(data => {
         console.log(data);
-        this.reservationsList = this.reservationsList.filter(reservation => reservation._id !== id);
+        this.reservationsList = this.reservationsList.filter(reservation => reservation.reservationId !== id);
         console.log('Reservation deleted from frontend');
       })
     );

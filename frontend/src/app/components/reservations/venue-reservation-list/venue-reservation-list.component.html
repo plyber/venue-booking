@@ -1,14 +1,14 @@
-<div *ngIf='reservationsList && reservationsList?.length > 0;'>
-  <div class="d-flex flex-wrap align-content-center justify-content-center">
-      <div *ngFor='let reservation of reservationsList' class='mt-4 mx-2 p-4 shadow card my-4'>
+<div *ngIf='(reservationsList && reservationsList?.length > 0) else noReservations' >
+  <div class="mt-4 d-flex flex-wrap align-content-center justify-content-center">
+      <div *ngFor='let reservation of reservationsList' class='m-2 p-4 shadow card' style="max-width: 24rem">
         <h4>Venue Name:
           <a [routerLink]="['/venue', reservation.venueId]" href='' class="text-decoration-none">{{reservation.venueName}}
             <i class='bi bi-box-arrow-up-right'></i>
           </a>
         </h4>
         <div class="d-flex flex-row justify-content-between mt-2">
-          <h6 class="card-subtitle">Created: {{ reservation.createdAt | date : "medium"}}</h6>
-          <h6 class="card-subtitle">Updated: {{ reservation.updatedAt | date : "medium"}}</h6>
+          <h6 class="card-subtitle"><strong>Created:</strong>{{reservation.createdAt | date : "short"}}</h6>
+          <h6 *ngIf="reservation.updatedAt" class="card-subtitle"><strong>Updated:</strong> {{ reservation.updatedAt | date : "short"}}</h6>
         </div>
         <hr>
         <div>
@@ -34,15 +34,22 @@
             <span>{{reservation.status}}</span>
           </p>
         </div>
-        <hr>
         <div class="d-flex flex-row justify-content-between mt-3">
-          <app-button (click)="confirmReservation(reservation._id)" [icon]="'bi bi-check-square'" [style]="'btn-success'"
+          <app-button (click)="confirmReservation(reservation.reservationId)" [icon]="'bi bi-check-square'" [style]="'btn-success'"
                       [text]="'Confirm'" [type]="'button'"></app-button>
-          <app-button (click)="pendingReservation(reservation._id)" [icon]="'bi bi-hourglass'" [style]="'btn-warning'"
+          <app-button (click)="pendingReservation(reservation.reservationId)" [icon]="'bi bi-hourglass'" [style]="'btn-warning'"
                       [text]="'Pending'" [type]="'button'"></app-button>
-          <app-button (click)="cancelReservation(reservation._id)" [icon]="'bi bi-x-square'" [style]="'btn-danger'"
+          <app-button (click)="cancelReservation(reservation.reservationId)" [icon]="'bi bi-x-square'" [style]="'btn-danger'"
                       [text]="'Cancel'" [type]="'button'"></app-button>
         </div>
       </div>
   </div>
 </div>
+<ng-template #noReservations>
+  <div class="col col-xl-5 col-lg-8 col-md-12 col-sm-12 col-xs-12 m-auto p-4 shadow card mt-4">
+    <h2>Your venues have no reservations yet.</h2>
+    <p>Browse other venues instead.</p>
+    <app-button [icon]="'bi bi-plus-square'" [routerLink]="['/venues']" [style]="'btn-outline-success'"
+                [text]="'Browse Venues'" class="align-self-center"></app-button>
+  </div>
+</ng-template>

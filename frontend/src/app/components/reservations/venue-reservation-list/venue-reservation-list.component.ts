@@ -22,7 +22,7 @@ export class VenueReservationListComponent implements OnInit, OnDestroy {
 
   loadReservations() {
     this.subscriptions.add(
-        this.reservationService.getReservationsByOwner().subscribe(data => {
+        this.reservationService.getReservationsByOwner().subscribe((data) => {
           this.reservationsList = data.length > 0 ? data : [];
         })
     );
@@ -33,7 +33,7 @@ export class VenueReservationListComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
         this.reservationService.updateReservation(id, updatedReservation).subscribe(data => {
           console.log('Reservation confirmed:', data);
-          const reservation = this.reservationsList.find(res => res._id === id);
+          const reservation = this.reservationsList.find(res => res.reservationId === id);
           if (reservation) {
             reservation.status = 'confirmed';
           }
@@ -45,7 +45,7 @@ export class VenueReservationListComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
         this.reservationService.updateReservation(id, updatedReservation).subscribe(data => {
           console.log('Reservation pending:', data);
-          const reservation = this.reservationsList.find(res => res._id === id);
+          const reservation = this.reservationsList.find(res => res.reservationId === id);
           if (reservation) {
             reservation.status = 'pending';
           }
@@ -57,7 +57,7 @@ export class VenueReservationListComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
         this.reservationService.updateReservation(id, updatedReservation).subscribe(data => {
           console.log('Reservation canceled:', data);
-          const reservation = this.reservationsList.find(res => res._id === id);
+          const reservation = this.reservationsList.find(res => res.reservationId === id);
           if (reservation) {
             reservation.status = 'cancelled';
           }

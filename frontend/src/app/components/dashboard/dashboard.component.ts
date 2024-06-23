@@ -12,17 +12,16 @@ import { Router } from "@angular/router";
 export class DashboardComponent implements OnInit, OnDestroy {
   dashboardMode: 'edit' | 'view' | 'changePassword' = 'view';
   responseMessage: string;
-  protected user?: User;
+  protected user?: User | null;
   private sub: Subscription = new Subscription();
 
   constructor(private authService: AuthService, private router: Router) {
-    this.sub.add(this.authService.getUserInfo().subscribe(response => {
-      this.user = response.user;
-    }));
   }
 
   ngOnInit() {
-
+    this.sub.add(this.authService.user.subscribe(data => {
+      this.user = data;
+    }));
   }
 
   changePassword() {
@@ -36,20 +35,27 @@ export class DashboardComponent implements OnInit, OnDestroy {
   saveInfo() {
     console.log();
     this.dashboardMode = 'view';
-    this.authService.saveUser({
-      id: this.user.id,
-      name: this.user.name,
-      email: this.user.email,
-      phone: this.user.phone,
-    }).subscribe(response => {
-      this.responseMessage = response.message;
-      setTimeout(() => {
-        this.responseMessage = null;
-      }, 1000)
-      this.router.navigate(['/dashboard']).then(()=>{
-        window.location.reload()
-      })
-    });
+    if (this.user) {
+      this.authService.saveUser({
+        password: this.user.password,
+        type: this.user.type,
+        username: this.user.username,
+        userId: this.user.userId,
+        name: this.user.name,
+        email: this.user.email,
+        phone: this.user.phone,
+      }).subscribe(() => {
+        this.responseMessage = 'User information saved successfully.';
+        setTimeout(() => {
+          this.responseMessage = null;
+        }, 1000);
+      }, error => {
+        this.responseMessage = 'Error saving user information.';
+        setTimeout(() => {
+          this.responseMessage = null;
+        }, 1000);
+      });
+    }
   }
 
   ngOnDestroy() {

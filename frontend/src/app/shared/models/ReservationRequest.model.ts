@@ -1,10 +1,11 @@
 export interface ReservationRequest {
-  id?: string;
+  reservationId?: string;
   customerId:string;
   customerName: string;
   customerEmail: string;
   customerPhone: string;
   createdAt: string;
+  updatedAt?: string;
   venueId: string;
   venueName: string;
   reservationDate?: Date;

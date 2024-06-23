@@ -6,7 +6,7 @@
     <div class="d-flex flex-row justify-content-between">
       <app-button (click)="createVenue()" [icon]="'bi bi-save'" [style]="'btn-outline-warning'" [text]="'Save'"
                   [type]="'button'"></app-button>
-      <app-button (click)="bookVenue(venue)" [icon]="'bi bi-book'" [routerLink]="['/venue', venue._id]" [style]="'btn-primary px-5'"
+      <app-button (click)="bookVenue(venue)" [icon]="'bi bi-book'" [routerLink]="['/venue', venue.venueId]" [style]="'btn-primary px-5'"
                   [text]="'Book'"
                   [type]="'button'"></app-button>
     </div>

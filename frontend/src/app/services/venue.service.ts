@@ -2,44 +2,44 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Venue } from "../shared/models/venue.model";
+import { environment } from "../../../env.config.loader";
 
 @Injectable({
   providedIn: 'root',
 })
 export class VenueService {
-  private apiUrl = 'http://localhost:5000';
+  private apiUrl = environment.AWS_BASEURL;
 
   constructor(private http: HttpClient) {
   }
 
   createVenue(venue: Venue): Observable<Venue> {
-    return this.http.post<Venue>(`${this.apiUrl}/create-venue`, venue)
+    return this.http.post<Venue>(`${this.apiUrl}/venue`, venue)
   }
 
   updateVenue(id: string, venue: Venue): Observable<Venue> {
     const venueCopy = { ...venue };
-    delete venueCopy._id;
-    return this.http.put<Venue>(`${this.apiUrl}/update-venue/${id}`, venueCopy);
+    delete venueCopy.venueId;
+    return this.http.put<Venue>(`${this.apiUrl}/venue/${id}`, venueCopy);
   }
 
   deleteVenue(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/delete-venue/${id}`)
+    return this.http.delete(`${this.apiUrl}/venue/${id}`)
   }
 
   viewVenues(): Observable<Venue[]> {
-    return this.http.get<Venue[]>(`${this.apiUrl}/view-venues`)
+    return this.http.get<Venue[]>(`${this.apiUrl}/venues`)
   }
 
   getVenueById(id: string): Observable<Venue> {
-    return this.http.get<Venue>(`${this.apiUrl}/view-venue/${id}`);
+    return this.http.get<Venue>(`${this.apiUrl}/venue/${id}`);
   }
 
   viewVenuesByUserId(): Observable<Venue[]> {
-    return this.http.get<Venue[]>(`${this.apiUrl}/view-owner-venues`,
+    return this.http.get<Venue[]>(`${this.apiUrl}/venues/by-owner`,
       this.getAuthHeaders()
     )
   }
-//TODO implement getVenueReservations
 
   private getAuthHeaders() {
     const token = localStorage.getItem('token');

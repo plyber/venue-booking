@@ -9,7 +9,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./authentication.component.scss'],
 })
 export class AuthenticationComponent implements OnInit {
-  credentials: Credentials = {username: '', password: '', accountType: null};
+  credentials: Credentials = {username: '', password: '', type: null};
   responseMessage = '';
   protected mode: 'register' | 'login';
 
@@ -31,8 +31,7 @@ export class AuthenticationComponent implements OnInit {
               this.responseMessage = message.message
               this.authService.getUserInfo().subscribe(() => {
                 setTimeout(() => {
-                  this.router.navigate(['/venues']).then(()=>
-                  window.location.reload());
+                  this.router.navigate(['/venues'])
                 }, 1000);
               });
             },

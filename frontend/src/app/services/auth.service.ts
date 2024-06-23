@@ -1,77 +1,79 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Credentials } from '../shared/models/Credentials.model';
 import { User } from "../shared/models/user";
+import { environment } from "../../../env.config.loader";
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class AuthService {
 
-  private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
-  private apiUrl = 'http://localhost:5000';
-  userInfo?: any;
+    private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
+    private apiUrl = environment.AWS_BASEURL;
+    private userSubject = new BehaviorSubject<User | null>(null);
 
-  constructor(private http: HttpClient) {
-    this.getUserInfo().subscribe(response=>{
-      this.userInfo=response.user;
-    })
-  }
+    constructor(private http: HttpClient) {
+    }
 
-  get isLoggedIn(): Observable<boolean> {
-    return this.loggedIn.asObservable();
-  }
+    get isLoggedIn(): Observable<boolean> {
+        return this.loggedIn.asObservable();
+    }
 
-  hasToken(): boolean {
-    return !!localStorage.getItem('token');
-  }
+    get user(): Observable<User | null> {
+        return this.userSubject.asObservable();
+    }
 
-  login(credentials: Credentials) {
-    return this.http.post<any>(
-      `${this.apiUrl}/login`,
-      credentials,
-    ).pipe(
-      tap(res => {
-        if (res.token) {
-          console.log('LOGIN TOKEN?:' + this.hasToken())
-          localStorage.setItem('token', res.token);
-          this.userInfo = res.user;
-        }
-      })
-    );
-  }
+    hasToken(): boolean {
+        return !!localStorage.getItem('token');
+    }
 
-  getUserInfo(): Observable<any> {
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Authorization': token
-    });
-    return this.http.get<User>(`${this.apiUrl}/user-info`, {headers})
-      .pipe(
-        tap(res => {
-          this.userInfo = res.user;
-          console.log(this.userInfo)
-        })
-      );
-  }
+    login(credentials: Credentials) {
+        return this.http.post<any>(`${this.apiUrl}/login`, credentials,).pipe(tap(res => {
+            if (res.token) {
+                console.log('LOGIN TOKEN?:' + this.hasToken())
+                localStorage.setItem('token', res.token);
+                this.userSubject.next({
+                    password: res.password, username: res.username, userId: res.userId, type: res.type
+                })
+                this.loggedIn.next(true);
+                console.log('Currently Logged User: ' + JSON.stringify(this.user))
+                console.log('Local Storage Token: ' + localStorage.getItem('token'))
+            }
+        }), catchError(error => throwError(error)));
+    }
 
-  saveUser(user: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/save-user`, user)
-  }
+    getUserInfo(): Observable<any> {
+        return this.http.get<any>(`${this.apiUrl}/user-info`)
+            .pipe(tap(res => {
+                this.userSubject.next({
+                    password: res.password, username: res.username, userId: res.userId, type: res.type, name: res.name, email: res.email, phone: res.phone
+                })
+                console.log(this.user)
+            }), catchError(error => throwError(error)));
+    }
 
-  logout() {
-    localStorage.removeItem('token');
-    console.log('LOGOUT TOKEN?:' + this.hasToken())
-    this.loggedIn.next(false);
-    this.userInfo = null;
-  }
+    saveUser(data: User): Observable<any> {
+        return this.http.put<any>(`${this.apiUrl}/user-info`, data).pipe(
+            tap(res => {
+                if (res.message === "User updated successfully") {
+                    this.getUserInfo().subscribe();
+                }
+            }),
+            catchError(error => throwError(error))
+        );
+    }
 
-  register(credentials: Credentials) {
-    return this.http.post<any>(
-      `${this.apiUrl}/register`,
-      credentials,
-    );
-  }
+    logout() {
+        localStorage.removeItem('token');
+        console.log('LOGOUT TOKEN?:' + this.hasToken())
+        this.loggedIn.next(false);
+        this.userSubject.next(null)
+    }
+
+    register(credentials: Credentials) {
+        return this.http.post<any>(`${this.apiUrl}/register`, credentials);
+    }
 
 }

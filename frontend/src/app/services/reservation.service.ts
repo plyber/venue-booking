@@ -1,55 +1,44 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from "rxjs";
+import { catchError, Observable, throwError } from "rxjs";
 import { ReservationResponse } from "../shared/models/ReservationResponse.model";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { environment } from "../../../env.config.loader";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReservationService {
-  private apiUrl = 'http://localhost:5000';
+  private apiUrl = environment.AWS_BASEURL;
 
   constructor(private http: HttpClient) {
   }
 
   createReservation(reservation: any): Observable<ReservationResponse> {
     return this.http.post<ReservationResponse>(
-      `${this.apiUrl}/create-reservation`,
-      reservation,
-      this.getAuthHeaders()
+      `${this.apiUrl}/reservation`,
+      reservation
     )
   }
 
   updateReservation(id: string, reservation: any): Observable<ReservationResponse> {
-    const reservationCopy = {...reservation}
-    delete reservationCopy._id
-    return this.http.put<ReservationResponse>(`${this.apiUrl}/update-reservation/${id}`, reservationCopy, this.getAuthHeaders())
+    return this.http.put<ReservationResponse>(`${this.apiUrl}/reservation/${id}`, reservation)
   }
 
   deleteReservation(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/delete-reservation/${id}`, this.getAuthHeaders())
+    return this.http.delete(`${this.apiUrl}/reservation/${id}`)
   }
 
-  viewReservationsByUserId(): Observable<ReservationResponse[]> {
-    console.log('Data updated from API');
+  getReservationsByUserId(): Observable<ReservationResponse[]> {
     return this.http.get<ReservationResponse[]>(
-      `${this.apiUrl}/view-reservations`,
-      this.getAuthHeaders()
-    )
+      `${this.apiUrl}/reservations`)
   }
 
   getReservationsByOwner(): Observable<ReservationResponse[]> {
-    return this.http.get<ReservationResponse[]>(`${this.apiUrl}/reservations/by-owner`,this.getAuthHeaders());
-  }
-
-  private getAuthHeaders() {
-    const token = localStorage.getItem('token');
-    console.log('Auth Token:', token);  // Debug statement
-    return token ? {headers: {Authorization: `Bearer ${token}`}} : {};
+    return this.http.get<ReservationResponse[]>(`${this.apiUrl}/reservations/by-owner`)
   }
 
   private handleError(error: HttpErrorResponse) {
-    console.error('An error occurred:', error.error);
+    console.error('An error occurred:', error.message);
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 }

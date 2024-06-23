@@ -9,48 +9,44 @@
         </h4>
         <div class="d-flex flex-row justify-content-between mt-2">
           <h6 class="card-subtitle">Created: {{ reservation.createdAt | date : "medium"}}</h6>
-          <h6 class="card-subtitle">Updated: {{ reservation.updatedAt | date : "medium"}}</h6>
+          <h6 *ngIf="reservation.updatedAt" class="card-subtitle">Updated: {{ reservation.updatedAt | date : "medium"}}</h6>
         </div>
         <hr>
         <div>
           <p><strong>Name: </strong>
-            <span *ngIf="!editingReservations.has(reservation._id)">{{reservation.customerName}}</span>
-            <input *ngIf="editingReservations.has(reservation._id)" [(ngModel)]="reservation.customerName" class="form-control" />
+            <span *ngIf="!editingReservations.has(reservation.reservationId)">{{reservation.customerName}}</span>
+            <input *ngIf="editingReservations.has(reservation.reservationId)" [(ngModel)]="reservation.customerName" class="form-control" />
           </p>
           <p><strong>Email: </strong>
-            <span *ngIf="!editingReservations.has(reservation._id)">{{reservation.customerEmail}}</span>
-            <input *ngIf="editingReservations.has(reservation._id)" [(ngModel)]="reservation.customerEmail" class="form-control" />
+            <span *ngIf="!editingReservations.has(reservation.reservationId)">{{reservation.customerEmail}}</span>
+            <input *ngIf="editingReservations.has(reservation.reservationId)" [(ngModel)]="reservation.customerEmail" class="form-control" />
           </p>
           <p><strong>Phone: </strong>
-            <span *ngIf="!editingReservations.has(reservation._id)">{{reservation.customerPhone}}</span>
-            <input *ngIf="editingReservations.has(reservation._id)" [(ngModel)]="reservation.customerPhone" class="form-control" />
+            <span *ngIf="!editingReservations.has(reservation.reservationId)">{{reservation.customerPhone}}</span>
+            <input *ngIf="editingReservations.has(reservation.reservationId)" [(ngModel)]="reservation.customerPhone" class="form-control" />
           </p>
           <p><strong>Date: </strong>
-            <span *ngIf="!editingReservations.has(reservation._id)">{{reservation.reservationDateTime | date : 'short'}}</span>
-            <input *ngIf="editingReservations.has(reservation._id)" [(ngModel)]="reservation.reservationDateTime" class="form-control" type="datetime-local" />
+            <span *ngIf="!editingReservations.has(reservation.reservationId)">{{reservation.reservationDateTime | date : 'medium'}}</span>
+            <input *ngIf="editingReservations.has(reservation.reservationId)" [(ngModel)]="reservation.reservationDateTime" class="form-control" type="datetime-local" />
           </p>
           <p><strong>Number of Guests: </strong>
-            <span *ngIf="!editingReservations.has(reservation._id)">{{reservation.numGuests}}</span>
-            <input *ngIf="editingReservations.has(reservation._id)" [(ngModel)]="reservation.numGuests" class="form-control" type="number" />
+            <span *ngIf="!editingReservations.has(reservation.reservationId)">{{reservation.numGuests}}</span>
+            <input *ngIf="editingReservations.has(reservation.reservationId)" [(ngModel)]="reservation.numGuests" class="form-control" type="number" />
           </p>
           <p><strong>Special Requests: </strong>
-            <span *ngIf="!editingReservations.has(reservation._id)">{{reservation.specialRequests}}</span>
-            <input *ngIf="editingReservations.has(reservation._id)" [(ngModel)]="reservation.specialRequests" class="form-control" />
+            <span *ngIf="!editingReservations.has(reservation.reservationId)">{{reservation.specialRequests}}</span>
+            <input *ngIf="editingReservations.has(reservation.reservationId)" [(ngModel)]="reservation.specialRequests" class="form-control" />
           </p>
-          <p class="text-capitalize"><strong>Status: </strong>
-            <span *ngIf="!editingReservations.has(reservation._id)">{{reservation.status}}</span>
-            <input *ngIf="editingReservations.has(reservation._id)" [(ngModel)]="reservation.status" class="form-control" />
-          </p>
+          <p class="text-capitalize"><strong>Status: </strong>{{reservation.status}}</p>
         </div>
-        <hr>
         <div class="d-flex flex-row justify-content-between mt-3">
-          <app-button *ngIf="!editingReservations.has(reservation._id)" (click)="editReservation(reservation._id)" [icon]="'bi bi-pencil'" [style]="'btn-primary px-5'"
+          <app-button *ngIf="!editingReservations.has(reservation.reservationId)" (click)="editReservation(reservation.reservationId)" [icon]="'bi bi-pencil'" [style]="'btn-primary px-5'"
                       [text]="'Edit'" [type]="'button'"></app-button>
-          <app-button *ngIf="editingReservations.has(reservation._id)" (click)="saveReservation(reservation)" [icon]="'bi bi-save'" [style]="'btn-success px-5'"
+          <app-button *ngIf="editingReservations.has(reservation.reservationId)" (click)="saveReservation(reservation)" [icon]="'bi bi-save'" [style]="'btn-success px-5'"
                       [text]="'Save'" [type]="'button'"></app-button>
-          <app-button *ngIf="editingReservations.has(reservation._id)" (click)="cancelEdit(reservation._id)" [icon]="'bi bi-x'" [style]="'btn-warning px-5'"
+          <app-button *ngIf="editingReservations.has(reservation.reservationId)" (click)="cancelEdit(reservation.reservationId)" [icon]="'bi bi-x'" [style]="'btn-warning px-5'"
                       [text]="'Cancel'" [type]="'button'"></app-button>
-          <app-button *ngIf="!editingReservations.has(reservation._id)" (click)="deleteReservation(reservation._id)" [icon]="'bi bi-trash'" [style]="'btn-danger px-5'"
+          <app-button *ngIf="!editingReservations.has(reservation.reservationId)" (click)="deleteReservation(reservation.reservationId)" [icon]="'bi bi-trash'" [style]="'btn-danger px-5'"
                       [text]="'Delete'" [type]="'button'"></app-button>
         </div>
       </div>

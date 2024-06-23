@@ -1,4 +1,7 @@
 Flask
+PyJWT
+Werkzeug
 Flask-PyMongo
 python-dotenv
+apig-wsgi
 Flask-CORS

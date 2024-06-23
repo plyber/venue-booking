@@ -80,8 +80,14 @@
     </div>
 
     <div class="mb-3">
-      <label class="form-label" for="images">Images (comma separated URLs)</label>
-      <input class="form-control" formControlName="images" id="images" type="text">
+      <label class="form-label" for="images">Images</label>
+      <div formArrayName="imagesArray">
+        <div *ngFor="let image of imagesArray.controls; let i=index" class="mb-2 d-flex flex-row gap-4">
+          <input class="form-control" id="images" [formControlName]="i" type="text">
+          <app-button [type]="'button'" [icon]="'bi bi-x'" [style]="'btn-outline-danger'" (click)="removeImage(i)"></app-button>
+        </div>
+        <app-button [type]="'button'" [icon]="'bi bi-plus'" [style]="'btn-outline-success'" (click)="addImage()"></app-button>
+      </div>
     </div>
 
     <button class="btn btn-primary" type="submit">Create Venue</button>

@@ -12,9 +12,10 @@
     <h2 class="card-title">
       <strong>{{ venueCard.name }}</strong>
     </h2>
-    <h6 class="card-subtitle">Created: {{ venueCard.createdAt | date : "medium" }}</h6>
+    <h6 class="card-subtitle">Created: {{ venueCard.createdAt | date : "short" }}</h6>
     <hr/>
     <p class="card-text"><strong>Owner ID: </strong> {{venueCard.ownerId}}</p>
+    <p class="card-text"><strong>Venue ID: </strong> {{venueCard.venueId}}</p>
     <p class="card-text"><strong>Type: </strong>{{ venueCard.type }}</p>
     <p class="card-text"><strong>Address: </strong>{{ venueCard.address }}</p>
     <p class="card-text"><strong>Capacity: </strong>{{ venueCard.capacity }}</p>

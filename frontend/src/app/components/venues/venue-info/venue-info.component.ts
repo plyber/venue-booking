@@ -14,19 +14,26 @@ export class VenueInfoComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private dataService: VenueService
-  ) {
+    private venueService: VenueService
+  ) {}
+
+  ngOnInit() {
     const venueId = this.route.snapshot.paramMap.get('id');
+    console.log('VENUE ID'+ venueId)
     if (venueId) {
-      this.dataService.getVenueById(venueId).subscribe(data => {
+      this.venueService.getVenueById(venueId).subscribe(data => {
         this.venue = data;
+        console.log(this.venue);
+        this.startImageRotation();
       });
     }
   }
 
-  ngOnInit() {
-    setInterval(() => {
-      this.current = ++this.current % this.venue.images.length;
-    }, 3000);
+  startImageRotation() {
+    if (this.venue?.images && this.venue.images.length > 0) {
+      setInterval(() => {
+        this.current = ++this.current % this.venue.images.length;
+      }, 3000);
+    }
   }
 }

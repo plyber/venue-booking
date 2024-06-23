@@ -1,1 +1,6 @@
 .idea/
+/backend
+
+#Variables
+/frontend/env.config.ts
+/frontend/env.config.loader.ts

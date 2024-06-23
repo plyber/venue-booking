@@ -1,5 +1,5 @@
 export interface Venue {
-  _id?: string;
+  venueId?: string;
   ownerId:string;
   name: string;
   address: string;

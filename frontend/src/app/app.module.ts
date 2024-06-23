@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module'; // Ensure this is imported
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VenueListComponent } from './components/venues/venue-list/venue-list.component';
 import { VenueCardComponent } from './components/venues/venue-card/venue-card.component';
@@ -16,7 +16,10 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ButtonComponent } from './shared/button/button.component';
 import { MyVenuesListComponent } from './components/venues/my-venues-list/my-venues-list.component';
 import { VenueFormComponent } from './components/venues/venue-form/venue-form.component';
-import { VenueReservationListComponent } from './components/reservations/venue-reservation-list/venue-reservation-list.component';
+import {
+  VenueReservationListComponent
+} from './components/reservations/venue-reservation-list/venue-reservation-list.component';
+import { AuthInterceptor } from "./auth/interceptors/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -35,8 +38,15 @@ import { VenueReservationListComponent } from './components/reservations/venue-r
     VenueFormComponent,
     VenueReservationListComponent,
   ],
-    imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule],
-  providers: [],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi:true
+    }
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+}

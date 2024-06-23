@@ -1,14 +1,14 @@
 export interface ReservationResponse {
-  _id?: string;
+  reservationId?: string;
   customerName: string;
   customerEmail: string;
   customerPhone: string;
   venueId: string;
   createdAt: string;
+  updatedAt?: string;
   customerId?: string;
   venueName: string;
   reservationDateTime: string;
-  updatedAt?: string;
   numGuests: number;
   specialRequests?: string;
   status: 'pending' | 'confirmed' | 'cancelled';

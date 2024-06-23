@@ -47,7 +47,7 @@ export class ReservationFormComponent implements OnDestroy {
     const venueId = this.route.snapshot.paramMap.get('id');
     if (venueId) {
       this.subscriptions.add(this.venueService.getVenueById(venueId).subscribe(data => {
-        this.reservation.venueId = this.currentVenue._id || '';
+        this.reservation.venueId = this.currentVenue.venueId || '';
         this.reservation.venueName = this.currentVenue.name;
         console.log(
           'found entry!',
@@ -60,7 +60,7 @@ export class ReservationFormComponent implements OnDestroy {
 
   createReservation(): void {
     const reservationData: ReservationResponse = {
-      venueId: this.currentVenue._id,
+      venueId: this.currentVenue.venueId,
       venueName: this.currentVenue.name,
       createdAt: new Date().toString(),
       reservationDateTime: new Date(

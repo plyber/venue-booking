@@ -32,14 +32,14 @@
         </div>
         <div *ngIf='mode==="register"' class='form-group mt-3'>
           <label class='form-check-label' for='venueAccountType'>
-            <input #venueAccountType [(ngModel)]='credentials.accountType' class='form-check-input'
+            <input #venueAccountType [(ngModel)]='credentials.type' class='form-check-input'
                    id='venueAccountType'
                    name='accountType' required
                    type='radio' value='venue'>
             Venue
           </label>
           <label class='form-check-label  ms-3' for='customerAccountType'>
-            <input #customerAccountType [(ngModel)]='credentials.accountType' class='form-check-input'
+            <input #customerAccountType [(ngModel)]='credentials.type' class='form-check-input'
                    id='customerAccountType' name='accountType' required
                    type='radio' value='customer'>
             Customer
