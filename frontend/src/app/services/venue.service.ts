@@ -43,7 +43,6 @@ export class VenueService {
 
   private getAuthHeaders() {
     const token = localStorage.getItem('token');
-    console.log('Auth Token:', token);  // Debug statement
     return token ? {headers: {Authorization: `Bearer ${token}`}} : {};
   }
 

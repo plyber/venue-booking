@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Credentials } from '../shared/models/Credentials.model';
 import { User } from "../shared/models/user";
 import { environment } from "../../../env.config.loader";
@@ -32,14 +32,11 @@ export class AuthService {
     login(credentials: Credentials) {
         return this.http.post<any>(`${this.apiUrl}/login`, credentials,).pipe(tap(res => {
             if (res.token) {
-                console.log('LOGIN TOKEN?:' + this.hasToken())
                 localStorage.setItem('token', res.token);
                 this.userSubject.next({
                     password: res.password, username: res.username, userId: res.userId, type: res.type
                 })
                 this.loggedIn.next(true);
-                console.log('Currently Logged User: ' + JSON.stringify(this.user))
-                console.log('Local Storage Token: ' + localStorage.getItem('token'))
             }
         }), catchError(error => throwError(error)));
     }
@@ -50,7 +47,6 @@ export class AuthService {
                 this.userSubject.next({
                     password: res.password, username: res.username, userId: res.userId, type: res.type, name: res.name, email: res.email, phone: res.phone
                 })
-                console.log(this.user)
             }), catchError(error => throwError(error)));
     }
 
@@ -67,7 +63,6 @@ export class AuthService {
 
     logout() {
         localStorage.removeItem('token');
-        console.log('LOGOUT TOKEN?:' + this.hasToken())
         this.loggedIn.next(false);
         this.userSubject.next(null)
     }

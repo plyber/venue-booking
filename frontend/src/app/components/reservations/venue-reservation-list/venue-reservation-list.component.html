@@ -1,48 +1,50 @@
-<div *ngIf='(reservationsList && reservationsList?.length > 0) else noReservations' >
+<div *ngIf='(reservationsList && reservationsList?.length > 0) else noReservations'>
   <div class="mt-4 d-flex flex-wrap align-content-center justify-content-center">
-      <div *ngFor='let reservation of reservationsList' class='m-2 p-4 shadow card' style="max-width: 24rem">
-        <h4>Venue Name:
-          <a [routerLink]="['/venue', reservation.venueId]" href='' class="text-decoration-none">{{reservation.venueName}}
-            <i class='bi bi-box-arrow-up-right'></i>
-          </a>
-        </h4>
-        <div class="d-flex flex-row justify-content-between mt-2">
-          <h6 class="card-subtitle"><strong>Created:</strong>{{reservation.createdAt | date : "short"}}</h6>
-          <h6 *ngIf="reservation.updatedAt" class="card-subtitle"><strong>Updated:</strong> {{ reservation.updatedAt | date : "short"}}</h6>
-        </div>
-        <hr>
-        <div>
-          <p><strong>Name: </strong>
-            <span>{{reservation.customerName}}</span>
-          </p>
-          <p><strong>Email: </strong>
-            <span>{{reservation.customerEmail}}</span>
-          </p>
-          <p><strong>Phone: </strong>
-            <span>{{reservation.customerPhone}}</span>
-          </p>
-          <p><strong>Date: </strong>
-            <span>{{reservation.reservationDateTime | date : 'short'}}</span>
-          </p>
-          <p><strong>Number of Guests: </strong>
-            <span>{{reservation.numGuests}}</span>
-          </p>
-          <p><strong>Special Requests: </strong>
-            <span>{{reservation.specialRequests}}</span>
-          </p>
-          <p class="text-capitalize"><strong>Status: </strong>
-            <span>{{reservation.status}}</span>
-          </p>
-        </div>
-        <div class="d-flex flex-row justify-content-between mt-3">
-          <app-button (click)="confirmReservation(reservation.reservationId)" [icon]="'bi bi-check-square'" [style]="'btn-success'"
-                      [text]="'Confirm'" [type]="'button'"></app-button>
-          <app-button (click)="pendingReservation(reservation.reservationId)" [icon]="'bi bi-hourglass'" [style]="'btn-warning'"
-                      [text]="'Pending'" [type]="'button'"></app-button>
-          <app-button (click)="cancelReservation(reservation.reservationId)" [icon]="'bi bi-x-square'" [style]="'btn-danger'"
-                      [text]="'Cancel'" [type]="'button'"></app-button>
-        </div>
+    <div *ngFor='let reservation of reservationsList' class='m-2 p-4 shadow card' style="max-width: 24rem">
+      <a [routerLink]="['/venue', reservation.venueId]" class="text-decoration-none display-8 fw-bold" href=''>{{reservation.venueName}}
+        <i class='bi bi-box-arrow-up-right'></i>
+      </a>
+      <div class="d-flex flex-row justify-content-between mt-2">
+        <h6 class="card-subtitle"><strong>Created:</strong><br>{{reservation.createdAt | date : "short"}}</h6>
+        <h6 *ngIf="reservation.updatedAt" class="card-subtitle text-end">
+          <strong>Updated:</strong><br>{{ reservation.updatedAt | date : "short"}}</h6>
       </div>
+      <hr>
+      <div>
+        <p><strong>Name: </strong>
+          <span>{{reservation.customerName}}</span>
+        </p>
+        <p><strong>Email: </strong>
+          <span>{{reservation.customerEmail}}</span>
+        </p>
+        <p><strong>Phone: </strong>
+          <span>{{reservation.customerPhone}}</span>
+        </p>
+        <p><strong>Date: </strong>
+          <span>{{reservation.reservationDateTime | date : 'short'}}</span>
+        </p>
+        <p><strong>Number of Guests: </strong>
+          <span>{{reservation.numGuests}}</span>
+        </p>
+        <p><strong>Special Requests: </strong>
+          <span>{{reservation.specialRequests}}</span>
+        </p>
+        <p class="text-capitalize"><strong>Status: </strong>
+          <span>{{reservation.status}}</span>
+        </p>
+      </div>
+      <div class="d-flex flex-row justify-content-between mt-3 gap-3">
+        <app-button (click)="confirmReservation(reservation.reservationId)" [icon]="'bi bi-check-square'"
+                    [style]="'btn-success'"
+                    [text]="'Confirm'" [type]="'button'"></app-button>
+        <app-button (click)="pendingReservation(reservation.reservationId)" [icon]="'bi bi-hourglass'"
+                    [style]="'btn-warning'"
+                    [text]="'Pending'" [type]="'button'"></app-button>
+        <app-button (click)="cancelReservation(reservation.reservationId)" [icon]="'bi bi-x-square'"
+                    [style]="'btn-danger'"
+                    [text]="'Cancel'" [type]="'button'"></app-button>
+      </div>
+    </div>
   </div>
 </div>
 <ng-template #noReservations>

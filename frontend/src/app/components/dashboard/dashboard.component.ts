@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../shared/models/user';
 import { Subscription } from "rxjs";
-import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +14,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   protected user?: User | null;
   private sub: Subscription = new Subscription();
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -25,7 +24,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   changePassword() {
-    console.log(this.dashboardMode);
     this.responseMessage = 'Password changed successfully.'
     setTimeout(() => {
       this.responseMessage = null;
@@ -33,7 +31,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   saveInfo() {
-    console.log();
     this.dashboardMode = 'view';
     if (this.user) {
       this.authService.saveUser({
@@ -50,7 +47,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.responseMessage = null;
         }, 1000);
       }, error => {
-        this.responseMessage = 'Error saving user information.';
+        this.responseMessage = `Error saving user information. ${error}`;
         setTimeout(() => {
           this.responseMessage = null;
         }, 1000);

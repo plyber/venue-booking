@@ -19,11 +19,9 @@ export class VenueInfoComponent implements OnInit {
 
   ngOnInit() {
     const venueId = this.route.snapshot.paramMap.get('id');
-    console.log('VENUE ID'+ venueId)
     if (venueId) {
       this.venueService.getVenueById(venueId).subscribe(data => {
         this.venue = data;
-        console.log(this.venue);
         this.startImageRotation();
       });
     }

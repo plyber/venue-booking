@@ -39,21 +39,16 @@ export class ReservationFormComponent implements OnDestroy {
     private router: Router
   ) {
     this.subscriptions.add(this.authService.getUserInfo().subscribe(res => {
-      this.reservation.customerName = res.user.name;
-      this.reservation.customerId = res.user.id;
-      this.reservation.customerEmail = res.user.email;
-      this.reservation.customerPhone = res.user.phone;
+      this.reservation.customerName = res.name;
+      this.reservation.customerId = res.userId;
+      this.reservation.customerEmail = res.email;
+      this.reservation.customerPhone = res.phone;
     }))
     const venueId = this.route.snapshot.paramMap.get('id');
     if (venueId) {
-      this.subscriptions.add(this.venueService.getVenueById(venueId).subscribe(data => {
+      this.subscriptions.add(this.venueService.getVenueById(venueId).subscribe(() => {
         this.reservation.venueId = this.currentVenue.venueId || '';
         this.reservation.venueName = this.currentVenue.name;
-        console.log(
-          'found entry!',
-          data,
-          `\n Form acquired reservation ID: ${this.reservation.venueId} \n Form acquired reservation name: ${this.reservation.venueName}`
-        );
       }));
     }
   }
@@ -74,8 +69,7 @@ export class ReservationFormComponent implements OnDestroy {
       specialRequests: this.reservation.specialRequests,
       status: 'pending',
     };
-    this.subscriptions.add(this.reservationService.createReservation(reservationData).subscribe(response => {
-      console.log('Reservation created:', reservationData, response);
+    this.subscriptions.add(this.reservationService.createReservation(reservationData).subscribe(() => {
       this.router.navigate(['/venues']);
     }));
   }

@@ -77,8 +77,7 @@ export class VenueFormComponent implements OnInit {
       };
 
       this.venueService.createVenue(newVenue).subscribe({
-        next: (response) => {
-          console.log('Venue created successfully:', response);
+        next: () => {
           this.router.navigate(['/my-venues']);
         },
         error: (error) => {

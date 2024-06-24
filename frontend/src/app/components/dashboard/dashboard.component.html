@@ -4,8 +4,8 @@
   <div *ngIf="user" class='col col-sm-12 col-md-12 col-lg-6 col-xl-6'>
     <div class='card shadow p-4'>
       <h2 class='card-title'><strong>Dashboard</strong></h2>
+      <small>ID: {{user.userId}}</small>
       <hr>
-      <p><strong>ID: </strong>{{user.userId}}</p>
       <p><strong>Username: </strong>{{user.username}}</p>
       <p class="text-capitalize"><strong>Account Type: </strong>{{user.type}}</p>
       <ng-container *ngIf="dashboardMode==='view' || dashboardMode==='changePassword'" class="account-info">

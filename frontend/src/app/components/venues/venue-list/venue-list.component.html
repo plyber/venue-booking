@@ -1,17 +1,23 @@
 <!--<button (click)="createVenue()" class="btn btn-outline-primary">-->
 <!--  Add VenueService-->
 <!--</button>-->
-<ng-container *ngIf="venuesList; else noData">
+<ng-container *ngIf="venuesList; else noData ">
   <app-venue-card *ngFor="let venue of venuesList" [venueCard]="venue">
     <div class="d-flex flex-row justify-content-between">
       <app-button (click)="createVenue()" [icon]="'bi bi-save'" [style]="'btn-outline-warning'" [text]="'Save'"
                   [type]="'button'"></app-button>
-      <app-button (click)="bookVenue(venue)" [icon]="'bi bi-book'" [routerLink]="['/venue', venue.venueId]" [style]="'btn-primary px-5'"
+      <app-button [icon]="'bi bi-book'" [routerLink]="['/venue', venue.venueId]" [style]="'btn-primary px-5'"
                   [text]="'Book'"
                   [type]="'button'"></app-button>
     </div>
   </app-venue-card>
 </ng-container>
-<ng-template #noData>
-  <app-alert [icon]="'bi bi-exclamation-triangle-fill'" [type]='"danger"'>No venue found.</app-alert>
+<ng-template #noData >
+  <div class="row">
+    <div class="col col-xl-5 col-lg-8 col-md-12 col-sm-12 col-xs-12 m-auto p-4 pb-2 shadow card mt-4">
+      <h2>There are no registered venues yet.</h2>
+      <p>Please wait for a venue owner to register a location.</p>
+      <app-alert [icon]="'bi bi-exclamation-triangle-fill'" [type]='"danger"'>No venues found.</app-alert>
+    </div>
+  </div>
 </ng-template>

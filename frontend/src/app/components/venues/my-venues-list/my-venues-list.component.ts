@@ -22,18 +22,14 @@ export class MyVenuesListComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.venueService.viewVenuesByUserId().subscribe(data => {
         this.venuesList = data.length > 0 ? data : [];
-        console.log(this.venuesList)
       })
     );
   }
 
-  //TODO implement reservations tied to each venue
-  deleteVenue(id) {
+  deleteVenue(id:string) {
     this.subscriptions.add(
-      this.venueService.deleteVenue(id).subscribe(data => {
-        console.log(data);
+      this.venueService.deleteVenue(id).subscribe(() => {
         this.venuesList = this.venuesList.filter(venue => venue.venueId !== id);
-        console.log('VenueService deleted from frontend');
       })
     );
   }
@@ -44,8 +40,7 @@ export class MyVenuesListComponent implements OnInit, OnDestroy {
   saveVenue(venue: Venue) {
     this.editingVenues.delete(venue.venueId);
     this.subscriptions.add(
-      this.venueService.updateVenue(venue.venueId, venue).subscribe(data => {
-        console.log('Venue updated:', data);
+      this.venueService.updateVenue(venue.venueId, venue).subscribe(() => {
         venue.updatedAt = new Date();
       })
     );

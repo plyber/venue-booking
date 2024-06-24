@@ -31,8 +31,7 @@ export class VenueReservationListComponent implements OnInit, OnDestroy {
   confirmReservation(id: string) {
     const updatedReservation = { status: 'confirmed' };
     this.subscriptions.add(
-        this.reservationService.updateReservation(id, updatedReservation).subscribe(data => {
-          console.log('Reservation confirmed:', data);
+        this.reservationService.updateReservation(id, updatedReservation).subscribe(() => {
           const reservation = this.reservationsList.find(res => res.reservationId === id);
           if (reservation) {
             reservation.status = 'confirmed';
@@ -43,8 +42,7 @@ export class VenueReservationListComponent implements OnInit, OnDestroy {
   pendingReservation(id:string){
     const updatedReservation = { status: 'pending' };
     this.subscriptions.add(
-        this.reservationService.updateReservation(id, updatedReservation).subscribe(data => {
-          console.log('Reservation pending:', data);
+        this.reservationService.updateReservation(id, updatedReservation).subscribe(() => {
           const reservation = this.reservationsList.find(res => res.reservationId === id);
           if (reservation) {
             reservation.status = 'pending';
@@ -55,8 +53,7 @@ export class VenueReservationListComponent implements OnInit, OnDestroy {
   cancelReservation(id: string) {
     const updatedReservation = { status: 'Canceled' };
     this.subscriptions.add(
-        this.reservationService.updateReservation(id, updatedReservation).subscribe(data => {
-          console.log('Reservation canceled:', data);
+        this.reservationService.updateReservation(id, updatedReservation).subscribe(() => {
           const reservation = this.reservationsList.find(res => res.reservationId === id);
           if (reservation) {
             reservation.status = 'cancelled';

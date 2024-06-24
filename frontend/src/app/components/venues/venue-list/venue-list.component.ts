@@ -23,7 +23,7 @@ export class VenueListComponent implements OnDestroy, OnInit {
   createVenue() {
     let mockVenueData: Venue = {
       ownerId: '6669a4b490c2d7eadb5de248',
-      name: crypto.randomUUID(),
+      name: "Cool Restaurant",
       address: 'Palace Str. 3224',
       city: 'Oradea',
       state: 'Romania',
@@ -39,16 +39,11 @@ export class VenueListComponent implements OnDestroy, OnInit {
       updatedAt: new Date(),
     };
     this.subscriptions.add(
-      this.venueService.createVenue(mockVenueData).subscribe(data => {
+      this.venueService.createVenue(mockVenueData).subscribe(() => {
         this.venuesList.push(mockVenueData);
         this.loadVenues();
-        console.log(mockVenueData, data);
       })
     );
-  }
-
-  bookVenue(venue) {
-    console.log(`Venue ${venue.name} clicked`);
   }
 
   loadVenues() {
@@ -57,16 +52,6 @@ export class VenueListComponent implements OnDestroy, OnInit {
         this.venuesList = data.length > 0 ? data : [];
       })
     );
-  }
-
-  bookmarkVenue(id) {
-    // this.subscriptions.add(
-    //   this.venueService.deleteVenue(id).subscribe(data => {
-    //     console.log(data);
-    //     this.venuesList = this.venuesList.filter(venue => venue._id !== id);
-    //     console.log('VenueService deleted from frontend');
-    //   })
-    // );
   }
 
   ngOnDestroy() {
